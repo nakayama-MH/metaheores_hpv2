@@ -43,7 +43,8 @@ export const AdminPage: React.FC = () => {
   const [newUser, setNewUser] = useState({
     email: '',
     password: '',
-    company_name: ''
+    company_name: '',
+    role: 'agent' as 'admin' | 'agent' | 'guest'
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -81,7 +82,7 @@ export const AdminPage: React.FC = () => {
       if (funcError || data?.error) throw new Error(data?.error || '作成に失敗しました');
       
       setIsAddModalOpen(false);
-      setNewUser({ email: '', password: '', company_name: '' });
+      setNewUser({ email: '', password: '', company_name: '', role: 'agent' });
       fetchData();
     } catch (err: any) {
       setError(err.message);
@@ -330,6 +331,18 @@ export const AdminPage: React.FC = () => {
               <div>
                 <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">会社名</label>
                 <input type="text" required value={newUser.company_name} onChange={(e)=>setNewUser({...newUser, company_name: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded text-sm outline-none focus:ring-2 focus:ring-slate-100" />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">権限ロール</label>
+                <select 
+                  value={newUser.role} 
+                  onChange={(e)=>setNewUser({...newUser, role: e.target.value as any})}
+                  className="w-full px-3 py-2 border border-slate-200 rounded text-sm outline-none focus:ring-2 focus:ring-slate-100 bg-white"
+                >
+                  <option value="agent">代理店 (Sales Agent)</option>
+                  <option value="admin">管理者 (Administrator)</option>
+                  <option value="guest">ゲスト (Guest)</option>
+                </select>
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">メールアドレス</label>
