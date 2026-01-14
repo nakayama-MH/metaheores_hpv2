@@ -151,8 +151,8 @@ export const Footer: React.FC = () => {
               </div>
             </Link>
 
-            <a
-              href="#"
+            <Link
+              to="/agency-login"
               className="group relative inline-flex items-center justify-center px-6 py-2 text-[13px] font-bold text-black bg-white border border-black rounded-full overflow-hidden transition-all duration-500 w-full"
             >
               <span className="absolute inset-0 w-full h-full bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -166,7 +166,7 @@ export const Footer: React.FC = () => {
                   </span>
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
 
