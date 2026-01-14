@@ -43,7 +43,6 @@ export const AdminPage: React.FC = () => {
   const [newUser, setNewUser] = useState({
     email: '',
     password: '',
-    full_name: '',
     company_name: ''
   });
   const [error, setError] = useState<string | null>(null);
@@ -82,7 +81,7 @@ export const AdminPage: React.FC = () => {
       if (funcError || data?.error) throw new Error(data?.error || '作成に失敗しました');
       
       setIsAddModalOpen(false);
-      setNewUser({ email: '', password: '', full_name: '', company_name: '' });
+      setNewUser({ email: '', password: '', company_name: '' });
       fetchData();
     } catch (err: any) {
       setError(err.message);
@@ -174,7 +173,7 @@ export const AdminPage: React.FC = () => {
               <table className="w-full text-left text-sm">
                 <thead className="bg-slate-50 text-slate-400 border-b border-slate-100 font-medium text-[10px] uppercase tracking-wider">
                   <tr>
-                    <th className="px-6 py-3">名前 / 会社</th>
+                    <th className="px-6 py-3">会社名</th>
                     <th className="px-6 py-3">ロール</th>
                     <th className="px-6 py-3 text-right">最終更新</th>
                   </tr>
@@ -192,8 +191,7 @@ export const AdminPage: React.FC = () => {
                       className="hover:bg-blue-50/30 cursor-pointer transition-colors group"
                     >
                       <td className="px-6 py-4">
-                        <div className="font-medium text-slate-800 group-hover:text-blue-600">{u.full_name || '未設定'}</div>
-                        <div className="text-xs text-slate-400">{u.company_name || '-'}</div>
+                        <div className="font-medium text-slate-800 group-hover:text-blue-600">{u.company_name || '未設定'}</div>
                       </td>
                       <td className="px-6 py-4">
                         <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded border ${
@@ -249,8 +247,7 @@ export const AdminPage: React.FC = () => {
             </div>
             <div className="p-8 space-y-6">
               <div className="pb-6 border-b border-slate-100">
-                <h3 className="text-xl font-bold text-slate-900">{selectedUser.full_name || '未設定'}</h3>
-                <p className="text-slate-500 text-sm flex items-center gap-1 mt-1"><Building size={14} /> {selectedUser.company_name || '会社名未設定'}</p>
+                <h3 className="text-xl font-bold text-slate-900">{selectedUser.company_name || '会社名未設定'}</h3>
               </div>
 
               <div className="space-y-4">
@@ -330,10 +327,6 @@ export const AdminPage: React.FC = () => {
             </div>
             <form onSubmit={handleAddUser} className="p-6 space-y-4">
               {error && <div className="p-3 bg-red-50 text-red-600 text-[11px] rounded flex gap-2 border border-red-100"><AlertCircle size={14} />{error}</div>}
-              <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">担当者名</label>
-                <input type="text" required value={newUser.full_name} onChange={(e)=>setNewUser({...newUser, full_name: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded text-sm outline-none focus:ring-2 focus:ring-slate-100" />
-              </div>
               <div>
                 <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">会社名</label>
                 <input type="text" required value={newUser.company_name} onChange={(e)=>setNewUser({...newUser, company_name: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded text-sm outline-none focus:ring-2 focus:ring-slate-100" />
