@@ -37,7 +37,7 @@ const DashboardPage: React.FC = () => {
         <div>
           <h1 className="text-lg font-bold text-slate-800 leading-tight">ダッシュボード</h1>
           <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider mt-0.5">
-            {profile?.full_name} / {role === 'admin' ? 'Administrator' : role === 'agent' ? 'Sales' : 'Guest'}
+            {profile?.company_name} / {role === 'admin' ? 'Administrator' : role === 'agent' ? 'Sales Agent' : 'Guest Account'}
           </p>
         </div>
         {role === 'admin' && (
@@ -118,10 +118,6 @@ const DashboardPage: React.FC = () => {
           <div className="bg-white border border-slate-200 rounded-md shadow-sm p-5 space-y-4">
             <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 pb-2">Account Info</h3>
             <div className="space-y-3">
-              <div>
-                <label className="text-[10px] text-slate-400 block mb-0.5">User Name</label>
-                <div className="text-sm font-bold text-slate-800">{profile?.full_name || '-'}</div>
-              </div>
               <div>
                 <label className="text-[10px] text-slate-400 block mb-0.5">Company</label>
                 <div className="text-sm font-bold text-slate-800">{profile?.company_name || '-'}</div>
