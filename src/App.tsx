@@ -45,7 +45,6 @@ import AgencyLayout from './pages/agency/AgencyLayout';
 import DashboardPage from './pages/agency/DashboardPage';
 import DocumentsPage from './pages/agency/DocumentsPage';
 import EventsPage from './pages/agency/EventsPage';
-import ConnectPage from './pages/agency/ConnectPage';
 import { AdminPage } from './pages/agency/Placeholders';
 
 function App() {
@@ -71,12 +70,6 @@ function App() {
               <Route index element={<><PageTitle title="代理店ダッシュボード | 株式会社MetaHeroes" /><DashboardPage /></>} />
               <Route path="documents" element={<><PageTitle title="資料ライブラリ | 株式会社MetaHeroes" /><DocumentsPage /></>} />
               <Route path="events" element={<><PageTitle title="イベント情報 | 株式会社MetaHeroes" /><EventsPage /></>} />
-              <Route path="connect" element={
-                <ProtectedRoute allowedRoles={['agent']}>
-                  <PageTitle title="MHコネクト | 株式会社MetaHeroes" />
-                  <ConnectPage />
-                </ProtectedRoute>
-              } />
               <Route path="admin" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <PageTitle title="管理者設定 | 株式会社MetaHeroes" />

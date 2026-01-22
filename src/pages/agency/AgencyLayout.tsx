@@ -45,12 +45,6 @@ const AgencyLayout: React.FC = () => {
       roles: ['admin', 'agent']
     },
     { 
-      label: 'MHコネクト', 
-      path: '/agency/connect', 
-      icon: Send,
-      roles: ['agent']
-    },
-    { 
       label: '管理者設定', 
       path: '/agency/admin', 
       icon: Settings,
