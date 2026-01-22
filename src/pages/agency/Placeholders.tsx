@@ -3,17 +3,15 @@ import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
 import { Database } from '../../types/database.types';
 import { 
-  Plus, 
   Trash2, 
   Tag, 
   Loader2, 
-  AlertCircle,
   Settings,
   ShieldCheck,
   Users,
   Mail,
   X,
-  Check,
+  Calendar,
   RefreshCw,
   KeyRound,
   Edit3
@@ -32,7 +30,6 @@ export const AdminPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Modals
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<ProfileWithEmail | null>(null);
   const [isEditingUser, setIsEditingUser] = useState(false);
   const [editForm, setEditForm] = useState({ company_name: '', role: 'agent' as any });
@@ -41,13 +38,6 @@ export const AdminPage: React.FC = () => {
   
   // Form States
   const [newServiceName, setNewServiceName] = useState('');
-  const [newUser, setNewUser] = useState({
-    email: '',
-    password: '',
-    company_name: '',
-    role: 'agent' as 'admin' | 'agent' | 'guest'
-  });
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -69,26 +59,6 @@ export const AdminPage: React.FC = () => {
       console.error('Error fetching data:', err);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleAddUser = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
-    try {
-      const { data, error: funcError } = await supabase.functions.invoke('manage-users', {
-        body: { action: 'create', ...newUser }
-      });
-      if (funcError || data?.error) throw new Error(data?.error || '作成に失敗しました');
-      
-      setIsAddModalOpen(false);
-      setNewUser({ email: '', password: '', company_name: '', role: 'agent' });
-      fetchData();
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -188,12 +158,6 @@ export const AdminPage: React.FC = () => {
                 <Users size={16} className="text-slate-400" />
                 登録アカウント一覧
               </h2>
-              <button 
-                onClick={() => setIsAddModalOpen(true)}
-                className="px-3 py-1.5 bg-slate-800 text-white rounded text-xs font-bold hover:bg-slate-700 flex items-center gap-1"
-              >
-                <Plus size={14} /> 新規作成
-              </button>
             </div>
             
             <div className="overflow-x-auto">

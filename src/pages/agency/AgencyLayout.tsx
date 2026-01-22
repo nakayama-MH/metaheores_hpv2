@@ -8,7 +8,6 @@ import {
   LogOut, 
   Menu, 
   X,
-  Send,
   Calendar,
   Link2,
   Video

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
 import { 
-  Play, Search, X, Loader2, Tag, LayoutGrid, List, ChevronRight, Plus, Edit3, Trash2, Check, Video as VideoIcon
+  Play, Search, X, Loader2, LayoutGrid, List, ChevronRight, Plus, Edit3, Trash2, Check, Video as VideoIcon
 } from 'lucide-react';
 
 type Video = {
