@@ -17,29 +17,45 @@ import {
   Check,
   Calendar,
   RefreshCw,
-  KeyRound
+  KeyRound,
+  Edit3
 } from 'lucide-react';
 
 type Service = Database['public']['Tables']['services']['Row'];
 type ProfileWithEmail = Database['public']['Tables']['profiles']['Row'] & { email: string };
+type Event = { 
+  id: string; 
+  title: string; 
+  content: string | null; 
+  url: string | null; 
+  event_dates: string[] | null;
+  created_at: string 
+};
 
 export const AdminPage: React.FC = () => {
-  const { role } = useAuth();
+  const { role, user } = useAuth();
   
   // States
   const [services, setServices] = useState<Service[]>([]);
   const [users, setUsers] = useState<ProfileWithEmail[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Modals
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEventModalOpen, setIsEventModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<ProfileWithEmail | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [isEditingUser, setIsEditingUser] = useState(false);
+  const [editForm, setEditForm] = useState({ company_name: '', role: 'agent' as any });
   const [isResettingPassword, setIsResettingPassword] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   
   // Form States
   const [newServiceName, setNewServiceName] = useState('');
+  const [eventForm, setEventForm] = useState({ title: '', content: '', url: '', dates: [] as string[] });
+  const [tempDate, setTempDate] = useState('');
   const [newUser, setNewUser] = useState({
     email: '',
     password: '',
@@ -55,20 +71,58 @@ export const AdminPage: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [serRes, usersRes] = await Promise.all([
+      const [serRes, usersRes, eventsRes] = await Promise.all([
         supabase.from('services').select('*').order('name'),
-        supabase.functions.invoke('manage-users', { body: { action: 'list' } })
+        supabase.functions.invoke('manage-users', { body: { action: 'list' } }),
+        supabase.from('events' as any).select('*').order('created_at', { ascending: false })
       ]);
       
       if (serRes.data) setServices(serRes.data);
       if (usersRes.data && !usersRes.error) {
         setUsers(usersRes.data);
       }
+      if (eventsRes.data) {
+        setEvents(eventsRes.data);
+      }
     } catch (err) {
       console.error('Error fetching data:', err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSaveEvent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const payload = {
+        title: eventForm.title,
+        content: eventForm.content,
+        url: eventForm.url,
+        event_dates: eventForm.dates.length > 0 ? eventForm.dates : null,
+        updated_at: new Date().toISOString()
+      };
+
+      if (selectedEvent) {
+        await supabase.from('events' as any).update(payload).eq('id', selectedEvent.id);
+      } else {
+        await supabase.from('events' as any).insert(payload);
+      }
+      setIsEventModalOpen(false);
+      setEventForm({ title: '', content: '', url: '', dates: [] });
+      setSelectedEvent(null);
+      fetchData();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteEvent = async (id: string) => {
+    if (!window.confirm('イベントを削除しますか？')) return;
+    await supabase.from('events' as any).delete().eq('id', id);
+    fetchData();
   };
 
   const handleAddUser = async (e: React.FormEvent) => {
@@ -86,6 +140,31 @@ export const AdminPage: React.FC = () => {
       fetchData();
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleUpdateUser = async () => {
+    if (!selectedUser || !editForm.company_name) return;
+    setIsSubmitting(true);
+    try {
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ 
+          company_name: editForm.company_name,
+          role: editForm.role,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', selectedUser.id);
+      
+      if (updateError) throw updateError;
+      
+      setIsEditingUser(false);
+      fetchData();
+      setSelectedUser({ ...selectedUser, company_name: editForm.company_name, role: editForm.role });
+    } catch (err: any) {
+      alert(err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -188,6 +267,8 @@ export const AdminPage: React.FC = () => {
                       onClick={() => {
                         setSelectedUser(u);
                         setIsResettingPassword(false);
+                        setIsEditingUser(false);
+                        setEditForm({ company_name: u.company_name || '', role: u.role });
                       }}
                       className="hover:bg-blue-50/30 cursor-pointer transition-colors group"
                     >
@@ -214,8 +295,67 @@ export const AdminPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Sidebar: Services */}
+        {/* Sidebar: Services & Events */}
         <div className="space-y-6">
+          {/* Event Management */}
+          <div className="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+            <div className="px-5 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+              <h2 className="font-semibold text-slate-700 flex items-center gap-2 text-sm">
+                <Calendar size={16} className="text-slate-400" />
+                イベント管理
+              </h2>
+              <button onClick={() => {
+                  setSelectedEvent(null);
+                  setEventForm({ title: '', content: '', url: '', dates: [] });
+                  setIsEventModalOpen(true);
+                }}
+                className="p-1 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+              >
+                <Plus size={16} />
+              </button>
+            </div>
+            <div className="p-4 space-y-2 max-h-[400px] overflow-y-auto">
+              {events.length === 0 ? (
+                <p className="text-[10px] text-slate-400 text-center py-4 font-bold uppercase">No events scheduled</p>
+              ) : events.map(event => (
+                <div key={event.id} className="group p-3 bg-slate-50 border border-slate-100 rounded hover:border-blue-200 transition-all">
+                  <div className="flex justify-between items-start gap-2">
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold text-slate-800 truncate">{event.title}</div>
+                      <div className="text-[9px] text-slate-400 mt-0.5 flex flex-wrap gap-1">
+                        {event.event_dates && event.event_dates.length > 0 ? (
+                          event.event_dates.sort().map(d => (
+                            <span key={d} className="bg-white border border-slate-200 px-1 rounded">{new Date(d).toLocaleDateString()}</span>
+                          ))
+                        ) : '日時未定'}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button 
+                        onClick={() => {
+                          setSelectedEvent(event);
+                          setEventForm({ 
+                            title: event.title, 
+                            content: event.content || '', 
+                            url: event.url || '',
+                            dates: event.event_dates || []
+                          });
+                          setIsEventModalOpen(true);
+                        }}
+                        className="p-1 text-slate-400 hover:text-blue-600"
+                      >
+                        <Edit3 size={12} />
+                      </button>
+                      <button onClick={() => handleDeleteEvent(event.id)} className="p-1 text-slate-400 hover:text-red-600">
+                        <Trash2 size={12} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
             <div className="px-5 py-4 border-b border-slate-200 bg-slate-50 font-semibold text-slate-700 text-sm flex items-center gap-2">
               <Tag size={16} className="text-slate-400" /> サービス管理
@@ -247,8 +387,25 @@ export const AdminPage: React.FC = () => {
               <button onClick={() => setSelectedUser(null)} className="text-slate-400 hover:text-slate-600 transition-colors"><X size={20} /></button>
             </div>
             <div className="p-8 space-y-6">
-              <div className="pb-6 border-b border-slate-100">
-                <h3 className="text-xl font-bold text-slate-900">{selectedUser.company_name || '会社名未設定'}</h3>
+              <div className="pb-6 border-b border-slate-100 flex items-center justify-between">
+                {isEditingUser ? (
+                  <div className="flex-1 space-y-3">
+                    <label className="text-[10px] font-bold text-slate-400 uppercase">会社名</label>
+                    <input 
+                      type="text" 
+                      value={editForm.company_name} 
+                      onChange={(e) => setEditForm({ ...editForm, company_name: e.target.value })}
+                      className="w-full px-3 py-2 border border-slate-200 rounded text-base font-bold outline-none focus:ring-2 focus:ring-blue-100"
+                    />
+                  </div>
+                ) : (
+                  <h3 className="text-xl font-bold text-slate-900">{selectedUser.company_name || '会社名未設定'}</h3>
+                )}
+                {!isEditingUser && (
+                  <button onClick={() => setIsEditingUser(true)} className="text-blue-600 hover:text-blue-800">
+                    <Edit3 size={16} />
+                  </button>
+                )}
               </div>
 
               <div className="space-y-4">
@@ -260,13 +417,43 @@ export const AdminPage: React.FC = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1"><ShieldCheck size={12} /> ロール</label>
-                    <div className="text-sm font-bold text-blue-600">{selectedUser.role.toUpperCase()}</div>
+                    {isEditingUser ? (
+                      <select 
+                        value={editForm.role}
+                        onChange={(e) => setEditForm({ ...editForm, role: e.target.value as any })}
+                        className="w-full px-2 py-1 border border-slate-200 rounded text-xs outline-none bg-white"
+                      >
+                        <option value="admin">ADMIN</option>
+                        <option value="agent">AGENT</option>
+                        <option value="guest">GUEST</option>
+                      </select>
+                    ) : (
+                      <div className="text-sm font-bold text-blue-600">{selectedUser.role.toUpperCase()}</div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1"><Calendar size={12} /> 登録日</label>
                     <div className="text-sm text-slate-600">{new Date(selectedUser.created_at).toLocaleDateString()}</div>
                   </div>
                 </div>
+
+                {isEditingUser && (
+                  <div className="pt-4 flex gap-2">
+                    <button 
+                      onClick={handleUpdateUser}
+                      disabled={isSubmitting}
+                      className="flex-1 px-4 py-2 bg-blue-600 text-white rounded text-xs font-bold hover:bg-blue-700 disabled:opacity-50"
+                    >
+                      {isSubmitting ? '保存中...' : '変更を保存'}
+                    </button>
+                    <button 
+                      onClick={() => setIsEditingUser(false)}
+                      className="px-4 py-2 border border-slate-200 text-slate-600 rounded text-xs font-bold hover:bg-slate-50"
+                    >
+                      キャンセル
+                    </button>
+                  </div>
+                )}
 
                 {/* Password Reset Section */}
                 <div className="pt-4 mt-4 border-t border-slate-100">
@@ -309,11 +496,97 @@ export const AdminPage: React.FC = () => {
 
               <div className="pt-6 flex gap-3 border-t border-slate-100">
                 <button onClick={() => setSelectedUser(null)} className="flex-1 px-4 py-2.5 border border-slate-200 text-slate-600 rounded text-xs font-bold hover:bg-slate-50">閉じる</button>
-                {selectedUser.role !== 'admin' && (
+                {selectedUser.id !== user?.id && (
                   <button onClick={() => handleDeleteUser(selectedUser.id)} className="px-4 py-2.5 bg-red-50 text-red-600 rounded text-xs font-bold hover:bg-red-100 flex items-center gap-2"><Trash2 size={14} /> 削除</button>
                 )}
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Event Modal */}
+      {isEventModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+          <div className="bg-white rounded-lg shadow-2xl w-full max-w-md overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+              <h2 className="font-bold text-slate-800 text-sm">{selectedEvent ? 'イベントを編集' : '新規イベント作成'}</h2>
+              <button onClick={() => setIsEventModalOpen(false)} className="text-slate-400 hover:text-slate-600"><X size={20} /></button>
+            </div>
+            <form onSubmit={handleSaveEvent} className="p-6 space-y-4">
+              <div>
+                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">イベント名</label>
+                <input 
+                  type="text" 
+                  required 
+                  value={eventForm.title} 
+                  onChange={(e)=>setEventForm({...eventForm, title: e.target.value})} 
+                  className="w-full px-3 py-2 border border-slate-200 rounded text-sm outline-none focus:ring-2 focus:ring-slate-100" 
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">開催日設定</label>
+                <div className="flex gap-2 mb-2">
+                  <input 
+                    type="date" 
+                    value={tempDate} 
+                    onChange={(e)=>setTempDate(e.target.value)} 
+                    className="flex-1 px-3 py-2 border border-slate-200 rounded text-sm outline-none focus:ring-2 focus:ring-slate-100" 
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => {
+                      if (tempDate && !eventForm.dates.includes(tempDate)) {
+                        setEventForm({ ...eventForm, dates: [...eventForm.dates, tempDate].sort() });
+                        setTempDate('');
+                      }
+                    }}
+                    className="px-3 py-2 bg-slate-100 text-slate-600 rounded text-xs font-bold hover:bg-slate-200"
+                  >
+                    追加
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2 p-2 bg-slate-50 rounded border border-slate-100 min-h-[40px]">
+                  {eventForm.dates.length === 0 && <span className="text-xs text-slate-400">日付が追加されていません</span>}
+                  {eventForm.dates.map(date => (
+                    <span key={date} className="flex items-center gap-1 bg-white border border-blue-200 text-blue-700 px-2 py-1 rounded text-xs font-bold shadow-sm">
+                      {new Date(date).toLocaleDateString()}
+                      <button 
+                        type="button"
+                        onClick={() => setEventForm({ ...eventForm, dates: eventForm.dates.filter(d => d !== date) })}
+                        className="text-blue-400 hover:text-red-500"
+                      >
+                        <X size={12} />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">内容</label>
+                <textarea 
+                  value={eventForm.content} 
+                  onChange={(e)=>setEventForm({...eventForm, content: e.target.value})} 
+                  className="w-full h-32 px-3 py-2 border border-slate-200 rounded text-sm outline-none focus:ring-2 focus:ring-slate-100 resize-none" 
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">リンクURL</label>
+                <input 
+                  type="url" 
+                  value={eventForm.url} 
+                  onChange={(e)=>setEventForm({...eventForm, url: e.target.value})} 
+                  placeholder="https://..." 
+                  className="w-full px-3 py-2 border border-slate-200 rounded text-sm outline-none focus:ring-2 focus:ring-slate-100" 
+                />
+              </div>
+              <div className="pt-4 flex gap-3">
+                <button type="button" onClick={()=>setIsEventModalOpen(false)} className="flex-1 px-4 py-2 border border-slate-200 text-slate-500 rounded text-xs font-bold hover:bg-slate-50">キャンセル</button>
+                <button type="submit" disabled={isSubmitting} className="flex-1 px-4 py-2 bg-slate-800 text-white rounded text-xs font-bold hover:bg-slate-700 flex justify-center gap-2">
+                  {isSubmitting ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />} {selectedEvent ? '更新' : '作成'}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

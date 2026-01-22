@@ -13,20 +13,20 @@ export const AboutPage: React.FC = () => {
       />
       
       {/* CEO Banner Section */}
-      <section className="relative w-full overflow-hidden">
-        {/* Base Image (100% width) */}
-        <div className="w-full h-auto">
+      <section className="relative w-full overflow-hidden bg-white">
+        {/* Base Image */}
+        <div className="w-full h-auto min-h-[450px] md:min-h-0 relative">
           <img 
             src="/assets/about/ceo_hero.png" 
             alt="CEO 松石 和俊" 
-            className="w-full h-auto object-cover"
+            className="w-full h-full object-cover md:h-auto absolute inset-0 md:relative"
           />
         </div>
 
-        {/* Overlay Text Content */}
+        {/* Overlay Text Content - Middle Left for both mobile and PC */}
         <div className="absolute inset-0 flex items-center">
-          <div className="container mx-auto px-4 md:px-24">
-            <div className="max-w-md bg-white/10 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none p-6 md:p-0 rounded-2xl">
+          <div className="container mx-auto px-10 md:px-24">
+            <div className="max-w-md relative z-10">
               <p className="text-xs md:text-sm font-bold text-gray-500 mb-1 md:mb-2">代表取締役社長CEO</p>
               <h2 className="text-3xl md:text-5xl font-black text-gray-800 mb-4 md:mb-8 tracking-tighter">
                 松石 和俊

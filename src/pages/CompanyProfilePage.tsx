@@ -87,31 +87,54 @@ export const CompanyProfilePage: React.FC = () => {
   ];
 
   return (
-    <main className="min-h-screen bg-white pb-32">
+    <main className="min-h-screen bg-white pb-20 md:pb-32">
       <PageHero 
         titleEn="COMPANY OVERVIEW" 
         titleJa="会社概要"
       />
 
-      <div className="container mx-auto px-4 max-w-4xl">
+      <div className="container mx-auto px-6 md:px-4 max-w-4xl">
         <div className="border-t border-gray-100">
           {profileData.map((item, index) => (
             <div 
               key={index} 
-              className="flex flex-col md:flex-row py-10 md:py-12 border-b border-gray-100 gap-4 md:gap-0"
+              className="flex flex-col md:flex-row py-8 md:py-12 border-b border-gray-100 gap-3 md:gap-0"
             >
               <div className="w-full md:w-1/3">
-                <h3 className="text-sm md:text-base font-black text-gray-800 tracking-wider">
+                <h3 className="text-sm font-black text-gray-400 md:text-gray-800 tracking-widest uppercase md:normal-case">
                   {item.label}
                 </h3>
               </div>
               <div className="w-full md:w-2/3">
-                <div className="text-sm md:text-base font-medium text-gray-600 leading-relaxed">
+                <div className="text-base md:text-lg font-medium text-gray-700 leading-relaxed">
                   {item.content}
                 </div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Google Maps Section */}
+        <div className="mt-16 md:mt-24">
+          <h3 className="text-sm font-black text-gray-400 tracking-widest mb-6 uppercase">Access Map</h3>
+          <div className="w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-gray-50">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.106828956662!2d135.5019299763756!3d34.70248538313463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e693967d6c69%3A0x6336a337c76378f7!2z44CSNTMwLTAwMjcg5aSn6Ziq5bqc5aSn6Ziq5biC5YyX5Yy65aCC5bGx55S677yR4oiS77yV!5e0!3m2!1sja!2sjp!4v1709620000000!5m2!1sja!2sjp"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="大阪本社"
+            />
+          </div>
+          <div className="mt-4 flex items-start gap-2 text-sm text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 flex-shrink-0 text-blue-500">
+              <path fillRule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+            </svg>
+            <p>大阪メトロ谷町線「中崎町駅」より徒歩5分 / 大阪メトロ御堂筋線「梅田駅」より徒歩8分</p>
+          </div>
         </div>
       </div>
     </main>

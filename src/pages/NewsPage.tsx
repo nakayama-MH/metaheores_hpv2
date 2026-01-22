@@ -122,8 +122,8 @@ export const NewsPage: React.FC = () => {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
                     </div>
                 </div>
-        {/* News Grid */}
-        <div className="max-w-7xl mx-auto">
+        {/* News List (Table Style) */}
+        <div className="max-w-7xl mx-auto px-4">
           {loading ? (
              <div className="flex justify-center items-center py-32">
                <div className="animate-spin rounded-full h-8 w-8 border-2 border-gray-100 border-t-blue-600"></div>
@@ -137,29 +137,29 @@ export const NewsPage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16"
+              className="divide-y divide-gray-100 border-t border-gray-100"
             >
               {blogs.map((item) => (
-                <Link key={item.id} to={`/blog/${item.id}`} className="group block">
-                  <div className="relative aspect-video overflow-hidden mb-6 bg-gray-100">
-                    <img 
-                      src={item.eyecatch?.url || PLACEHOLDER_IMAGE} 
-                      alt="" 
-                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
-                    />
+                <Link key={item.id} to={`/blog/${item.id}`} className="group flex flex-col md:flex-row md:items-center gap-6 md:gap-12 py-10 hover:bg-gray-50/50 transition-all px-6 -mx-6">
+                  <div className="flex items-center gap-10 flex-shrink-0 min-w-[300px]">
+                    <time className="text-sm md:text-base font-black text-gray-900 font-mono tracking-wider">
+                      {formatDate(item.publishedAt)}
+                    </time>
                     {item.category && (
-                      <span className="absolute bottom-0 left-0 px-4 py-2 bg-blue-600 text-[10px] font-black tracking-widest text-white uppercase">
+                      <span className="px-5 py-2 bg-gray-900 text-[10px] font-black text-white uppercase tracking-[0.2em] text-center min-w-[120px]">
                         {item.category.name}
                       </span>
                     )}
                   </div>
-                  <div className="space-y-4 px-1">
-                    <time className="text-[10px] font-black text-gray-300 tracking-[0.2em] font-mono block">
-                      {formatDate(item.publishedAt)}
-                    </time>
-                    <h3 className="text-gray-900 text-base font-black leading-relaxed line-clamp-2 group-hover:text-blue-600 transition-colors tracking-tight">
-                      {item.title}
-                    </h3>
+                  <h3 className="text-base md:text-xl font-black text-gray-700 group-hover:text-blue-600 transition-colors line-clamp-2 flex-grow tracking-tight">
+                    {item.title}
+                  </h3>
+                  <div className="hidden md:block">
+                    <div className="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-blue-600 group-hover:border-blue-600 transition-all">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </div>
                   </div>
                 </Link>
               ))}

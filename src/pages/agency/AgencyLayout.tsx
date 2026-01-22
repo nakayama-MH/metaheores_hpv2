@@ -8,7 +8,8 @@ import {
   LogOut, 
   Menu, 
   X,
-  Send
+  Send,
+  Calendar
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -36,6 +37,12 @@ const AgencyLayout: React.FC = () => {
       path: '/agency/documents', 
       icon: FileText,
       roles: ['admin', 'agent', 'guest']
+    },
+    { 
+      label: 'イベント情報', 
+      path: '/agency/events', 
+      icon: Calendar,
+      roles: ['admin', 'agent']
     },
     { 
       label: 'MHコネクト', 
@@ -102,7 +109,7 @@ const AgencyLayout: React.FC = () => {
                   role === 'agent' ? 'bg-blue-100 text-blue-700' :
                   'bg-gray-100 text-gray-700'
                 }`}>
-                  {role || 'Guest'}
+                  {role === 'admin' ? '管理者' : role === 'agent' ? '代理店' : 'ゲスト'}
                 </span>
               </div>
             </div>

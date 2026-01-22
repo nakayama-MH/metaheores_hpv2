@@ -1,0 +1,310 @@
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../../lib/supabase';
+import { Database } from '../../types/database.types';
+import { Calendar as CalendarIcon, ExternalLink, Loader2, LayoutList, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+
+type Event = {
+  id: string;
+  title: string;
+  content: string | null;
+  url: string | null;
+  event_dates: string[] | null;
+  created_at: string;
+  updated_at: string;
+};
+
+const EventsPage: React.FC = () => {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('events' as any)
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      if (data) setEvents(data as Event[]);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // --- Calendar Logic ---
+  const [currentDate, setCurrentDate] = useState(new Date());
+  
+  const getDaysInMonth = (year: number, month: number) => {
+    return new Date(year, month + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (year: number, month: number) => {
+    return new Date(year, month, 1).getDay();
+  };
+
+  const generateCalendarDays = () => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const daysInMonth = getDaysInMonth(year, month);
+    const firstDay = getFirstDayOfMonth(year, month);
+    
+    const days = [];
+    for (let i = 0; i < firstDay; i++) {
+      days.push(null);
+    }
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push(new Date(year, month, i));
+    }
+    return days;
+  };
+
+  const changeMonth = (offset: number) => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + offset, 1));
+  };
+
+  const getEventsForDate = (date: Date) => {
+    return events.filter(e => {
+      // Check if the event has this specific date in its event_dates array
+      if (e.event_dates && e.event_dates.length > 0) {
+        return e.event_dates.some(dStr => {
+          const d = new Date(dStr);
+          return d.getDate() === date.getDate() && 
+                 d.getMonth() === date.getMonth() && 
+                 d.getFullYear() === date.getFullYear();
+        });
+      }
+      // Fallback to created_at if no dates set
+      const eDate = new Date(e.created_at);
+      return eDate.getDate() === date.getDate() && 
+             eDate.getMonth() === date.getMonth() && 
+             eDate.getFullYear() === date.getFullYear();
+    });
+  };
+
+  // Format dates helper
+  const formatDates = (dates: string[] | null) => {
+    if (!dates || dates.length === 0) return '日時未定';
+    // Sort and limit display
+    const sortedDates = [...dates].sort();
+    if (sortedDates.length <= 3) {
+      return sortedDates.map(d => new Date(d).toLocaleDateString()).join(', ');
+    }
+    return `${sortedDates[0] ? new Date(sortedDates[0]).toLocaleDateString() : ''} ...他${sortedDates.length - 1}日`;
+  };
+
+  return (
+    <div className="space-y-6 max-w-5xl mx-auto">
+      {/* Header */}
+      <div className="flex items-end justify-between border-b border-slate-200 pb-4">
+        <div>
+          <h1 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+            <CalendarIcon className="text-blue-500" size={24} />
+            イベント情報
+          </h1>
+          <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mt-1">Events & Announcements</p>
+        </div>
+        
+        {/* View Toggle */}
+        <div className="flex bg-slate-100 p-1 rounded-lg">
+          <button
+            onClick={() => setViewMode('list')}
+            className={`px-3 py-1.5 rounded text-xs font-bold flex items-center gap-1.5 transition-all ${
+              viewMode === 'list' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            <LayoutList size={14} /> リスト
+          </button>
+          <button
+            onClick={() => setViewMode('calendar')}
+            className={`px-3 py-1.5 rounded text-xs font-bold flex items-center gap-1.5 transition-all ${
+              viewMode === 'calendar' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            <CalendarIcon size={14} /> カレンダー
+          </button>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="flex justify-center py-20">
+          <Loader2 className="animate-spin text-slate-300" size={32} />
+        </div>
+      ) : events.length === 0 ? (
+        <div className="text-center py-20 bg-white rounded-lg border border-slate-200 shadow-sm">
+          <p className="text-slate-400 font-bold text-sm">現在掲載されているイベントはありません。</p>
+        </div>
+      ) : (
+        <>
+          {/* List View */}
+          {viewMode === 'list' && (
+            <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="divide-y divide-slate-100">
+                {events.map((event) => (
+                  <button
+                    key={event.id}
+                    onClick={() => setSelectedEvent(event)}
+                    className="w-full flex items-center justify-between p-4 sm:p-6 hover:bg-slate-50 transition-colors text-left group"
+                  >
+                    <div className="flex items-center gap-4 min-w-0">
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                      <div className="min-w-0">
+                        <h2 className="text-sm sm:text-base font-bold text-slate-800 truncate group-hover:text-blue-600 transition-colors">
+                          {event.title}
+                        </h2>
+                        <div className="text-[10px] sm:text-xs font-mono text-slate-400 mt-1">
+                          {formatDates(event.event_dates)}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-slate-300 group-hover:translate-x-1 transition-transform ml-4">
+                      <ChevronRight size={14} />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Calendar View */}
+          {viewMode === 'calendar' && (
+            <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-300 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-bold text-slate-800">
+                  {currentDate.getFullYear()}年 {currentDate.getMonth() + 1}月
+                </h2>
+                <div className="flex gap-2">
+                  <button onClick={() => changeMonth(-1)} className="p-1.5 hover:bg-slate-100 rounded-full text-slate-500"><ChevronLeft size={20} /></button>
+                  <button onClick={() => changeMonth(1)} className="p-1.5 hover:bg-slate-100 rounded-full text-slate-500"><ChevronRight size={20} /></button>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-7 gap-2 text-center mb-2">
+                {['日', '月', '火', '水', '木', '金', '土'].map(day => (
+                  <div key={day} className="text-xs font-bold text-slate-400 py-2">{day}</div>
+                ))}
+              </div>
+              
+              <div className="grid grid-cols-7 gap-2">
+                {generateCalendarDays().map((date, i) => {
+                  if (!date) return <div key={i} className="aspect-square" />;
+                  
+                  const dayEvents = getEventsForDate(date);
+                  const isToday = new Date().toDateString() === date.toDateString();
+                  
+                  return (
+                    <div key={i} className={`min-h-[80px] border rounded-lg p-1 relative flex flex-col items-center justify-start ${isToday ? 'border-blue-500 bg-blue-50/30' : 'border-slate-100'}`}>
+                      <span className={`text-[10px] font-medium mb-1 ${isToday ? 'text-blue-600' : 'text-slate-500'}`}>{date.getDate()}</span>
+                      <div className="flex flex-col gap-1 w-full px-0.5 overflow-y-auto max-h-[60px] scrollbar-none">
+                        {dayEvents.map(event => (
+                          <button 
+                            key={event.id}
+                            onClick={() => setSelectedEvent(event)}
+                            className="w-full text-[8px] bg-blue-100 text-blue-700 rounded px-1 py-0.5 truncate text-left hover:bg-blue-200 transition-colors"
+                          >
+                            {event.title}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Simple Modal - Internal Tool Style */}
+      <AnimatePresence>
+        {selectedEvent && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedEvent(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.98, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.98, opacity: 0 }}
+              className="bg-white rounded-lg shadow-xl overflow-hidden w-full max-w-2xl max-h-[90vh] flex flex-col border border-slate-200"
+              onClick={e => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between shrink-0">
+                <h3 className="font-bold text-slate-700 text-lg">イベント詳細</h3>
+                <button 
+                  onClick={() => setSelectedEvent(null)}
+                  className="text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              {/* Content */}
+              <div className="p-6 overflow-y-auto space-y-6">
+                
+                {/* Title & Date */}
+                <div className="space-y-2">
+                  <div className="inline-block px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded border border-slate-200 font-mono">
+                    {selectedEvent.event_dates && selectedEvent.event_dates.length > 0 
+                      ? selectedEvent.event_dates.sort().map(d => new Date(d).toLocaleDateString()).join(', ')
+                      : '日時未定'}
+                  </div>
+                  <h2 className="text-xl font-bold text-slate-800 leading-snug">
+                    {selectedEvent.title}
+                  </h2>
+                </div>
+
+                {/* Description */}
+                {selectedEvent.content && (
+                  <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap bg-slate-50 p-4 rounded border border-slate-100">
+                    {selectedEvent.content}
+                  </div>
+                )}
+
+                {/* Link */}
+                {selectedEvent.url && (
+                  <div className="pt-2">
+                    <a 
+                      href={selectedEvent.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium"
+                    >
+                      <ExternalLink size={16} />
+                      関連リンクを開く
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              {/* Footer */}
+              <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+                <button 
+                  onClick={() => setSelectedEvent(null)}
+                  className="px-4 py-2 bg-white border border-slate-300 text-slate-700 text-sm font-medium rounded hover:bg-slate-50 transition-colors shadow-sm"
+                >
+                  閉じる
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default EventsPage;

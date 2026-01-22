@@ -37,12 +37,12 @@ const DashboardPage: React.FC = () => {
         <div>
           <h1 className="text-lg font-bold text-slate-800 leading-tight">ダッシュボード</h1>
           <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider mt-0.5">
-            {profile?.company_name} / {role === 'admin' ? 'Administrator' : role === 'agent' ? 'Sales Agent' : 'Guest Account'}
+            {profile?.company_name} / {role === 'admin' ? '管理者' : role === 'agent' ? '代理店' : 'ゲスト'}
           </p>
         </div>
         {role === 'admin' && (
           <Link to="/agency/admin" className="px-3 py-1.5 bg-slate-800 text-white text-[10px] font-black uppercase tracking-widest rounded hover:bg-slate-700 transition-all flex items-center gap-1.5">
-            <Users size={12} /> Admin Settings
+            <Users size={12} /> 管理者設定
           </Link>
         )}
       </div>
@@ -58,14 +58,14 @@ const DashboardPage: React.FC = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
               {categories.map((cat) => (
-                <Link key={cat.id} to={`/agency/documents?category=${cat.id}`} className="group flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                      <FileText size={14} />
+                <Link key={cat.id} to={`/agency/documents?category=${cat.id}`} className="group flex items-center justify-between p-5 hover:bg-slate-50 transition-colors">
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                      <FileText size={16} />
                     </div>
-                    <span className="text-sm font-bold text-slate-700 group-hover:text-blue-600">{cat.name}</span>
+                    <span className="text-[13px] md:text-sm font-bold text-slate-700 group-hover:text-blue-600 leading-tight">{cat.name}</span>
                   </div>
-                  <ChevronRight size={14} className="text-slate-300 group-hover:text-blue-500" />
+                  <ChevronRight size={14} className="text-slate-300 group-hover:text-blue-500 shrink-0 ml-2" />
                 </Link>
               ))}
             </div>
@@ -78,15 +78,15 @@ const DashboardPage: React.FC = () => {
                 <Clock size={14} className="text-slate-400" />
                 <h2 className="text-xs font-bold uppercase tracking-widest">新着資料</h2>
               </div>
-              <Link to="/agency/documents" className="text-[10px] font-bold text-blue-600 hover:underline uppercase">View All</Link>
+              <Link to="/agency/documents" className="text-[10px] font-bold text-blue-600 hover:underline uppercase">すべて見る</Link>
             </div>
             <div className="overflow-x-auto text-[13px]">
               <table className="w-full text-left">
                 <thead className="bg-slate-50/50 text-slate-400 border-b border-slate-100 text-[10px] font-black uppercase">
                   <tr>
-                    <th className="px-4 py-2 w-12 text-center">Type</th>
-                    <th className="px-4 py-2">Document</th>
-                    <th className="px-4 py-2 text-right">Date</th>
+                    <th className="px-4 py-2 w-12 text-center">形式</th>
+                    <th className="px-4 py-2">資料名</th>
+                    <th className="px-4 py-2 text-right">日付</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50">
@@ -116,14 +116,14 @@ const DashboardPage: React.FC = () => {
         {/* Sidebar Info */}
         <div className="lg:col-span-4">
           <div className="bg-white border border-slate-200 rounded-md shadow-sm p-5 space-y-4">
-            <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 pb-2">Account Info</h3>
+            <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 pb-2">アカウント情報</h3>
             <div className="space-y-3">
               <div>
-                <label className="text-[10px] text-slate-400 block mb-0.5">Company</label>
+                <label className="text-[10px] text-slate-400 block mb-0.5">会社名</label>
                 <div className="text-sm font-bold text-slate-800">{profile?.company_name || '-'}</div>
               </div>
               <div>
-                <label className="text-[10px] text-slate-400 block mb-0.5">Assigned Role</label>
+                <label className="text-[10px] text-slate-400 block mb-0.5">権限</label>
                 <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100">{role}</span>
               </div>
             </div>

@@ -102,7 +102,10 @@ const DocumentsPage: React.FC = () => {
     const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || doc.category_id === selectedCategory;
     const matchesService = selectedService === 'all' || doc.service_id === selectedService;
-    return matchesSearch && matchesCategory && matchesService;
+    // Check permissions
+    const matchesRole = role === 'admin' || (doc.allowed_roles && doc.allowed_roles.includes(role as UserRole));
+    
+    return matchesSearch && matchesCategory && matchesService && matchesRole;
   });
 
   return (
@@ -114,7 +117,7 @@ const DocumentsPage: React.FC = () => {
         </div>
         {role === 'admin' && (
           <button onClick={() => { setSelectedDoc(null); resetForm(); setIsAddModalOpen(true); }} className="px-3 py-1.5 bg-slate-800 text-white text-[10px] font-black uppercase tracking-widest rounded hover:bg-slate-700 transition-all flex items-center gap-1.5">
-            <Plus size={12} /> Add Document
+            <Plus size={12} /> 資料を追加
           </button>
         )}
       </div>
@@ -122,7 +125,7 @@ const DocumentsPage: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
         <div className="sm:col-span-2 relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-          <input type="text" placeholder="Search by title..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-9 pr-4 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:ring-1 focus:ring-slate-200" />
+          <input type="text" placeholder="タイトルで検索..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-9 pr-4 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:ring-1 focus:ring-slate-200" />
         </div>
         <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none">
           <option value="all">すべてのカテゴリ</option>
@@ -139,9 +142,9 @@ const DocumentsPage: React.FC = () => {
           <table className="w-full text-left">
             <thead className="bg-slate-50 text-slate-400 border-b border-slate-100 text-[9px] font-black uppercase tracking-wider">
               <tr>
-                <th className="px-4 py-2">Document Title</th>
-                <th className="px-4 py-2">Category / Service</th>
-                <th className="px-4 py-2 text-right">Ext</th>
+                <th className="px-4 py-2">資料タイトル</th>
+                <th className="px-4 py-2">カテゴリ / サービス</th>
+                <th className="px-4 py-2 text-right">形式</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50 text-xs">
@@ -183,7 +186,7 @@ const DocumentsPage: React.FC = () => {
         <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-2 sm:p-4 backdrop-blur-sm">
           <div className={`bg-white rounded shadow-2xl overflow-hidden flex flex-col w-full max-h-[95vh] ${(!isEditing && !isAddModalOpen && selectedDoc?.file_url) ? 'max-w-5xl' : 'max-w-xl'}`}>
             <div className="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between shrink-0">
-              <h2 className="font-black text-slate-800 text-[10px] uppercase tracking-widest">{isAddModalOpen ? 'New Document' : isEditing ? 'Edit Document' : 'Document Preview'}</h2>
+              <h2 className="font-black text-slate-800 text-[10px] uppercase tracking-widest">{isAddModalOpen ? '新規資料登録' : isEditing ? '資料編集' : '資料プレビュー'}</h2>
               <button onClick={() => { setSelectedDoc(null); setIsAddModalOpen(false); setIsEditing(false); resetForm(); }} className="text-slate-400 hover:text-slate-600"><X size={18} /></button>
             </div>
             <div className="flex flex-col md:flex-row overflow-hidden">
@@ -200,34 +203,62 @@ const DocumentsPage: React.FC = () => {
                 {(isAddModalOpen || isEditing) ? (
                   <form onSubmit={handleSave} className="space-y-4">
                     <div className="space-y-1">
-                      <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Title</label>
+                      <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">タイトル</label>
                       <input type="text" required value={docForm.title} onChange={(e) => setDocForm({...docForm, title: e.target.value})} className="w-full px-3 py-1.5 border border-slate-200 rounded text-xs outline-none focus:ring-1 focus:ring-slate-200" />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1">
-                        <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Category</label>
+                        <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">カテゴリ</label>
                         <select required value={docForm.categoryId} onChange={(e) => setDocForm({...docForm, categoryId: e.target.value})} className="w-full px-2 py-1.5 border border-slate-200 rounded text-xs outline-none">{categories.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}</select>
                       </div>
                       <div className="space-y-1">
-                        <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Service</label>
+                        <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">サービス</label>
                         <select value={docForm.serviceId} onChange={(e) => setDocForm({...docForm, serviceId: e.target.value})} className="w-full px-2 py-1.5 border border-slate-200 rounded text-xs outline-none"><option value="">None</option>{services.map(ser => <option key={ser.id} value={ser.id}>{ser.name}</option>)}</select>
                       </div>
                     </div>
+                    
+                    {/* Allowed Roles Selection */}
                     <div className="space-y-1">
-                      <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Description</label>
+                      <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">公開範囲 (Allowed Roles)</label>
+                      <div className="flex flex-wrap gap-3 p-2 border border-slate-200 rounded bg-slate-50/50">
+                        {(['admin', 'agent', 'guest'] as const).map((roleOption) => (
+                          <label key={roleOption} className={`flex items-center gap-2 cursor-pointer ${roleOption === 'admin' ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                            <input
+                              type="checkbox"
+                              checked={docForm.allowedRoles.includes(roleOption)}
+                              disabled={roleOption === 'admin'} // Admin is always required/included
+                              onChange={(e) => {
+                                const currentRoles = docForm.allowedRoles;
+                                if (e.target.checked) {
+                                  setDocForm({ ...docForm, allowedRoles: [...currentRoles, roleOption] });
+                                } else {
+                                  setDocForm({ ...docForm, allowedRoles: currentRoles.filter(r => r !== roleOption) });
+                                }
+                              }}
+                              className="rounded border-slate-300 text-slate-800 focus:ring-slate-800 scale-90"
+                            />
+                            <span className="text-xs font-bold text-slate-700 capitalize">{roleOption}</span>
+                          </label>
+                        ))}
+                      </div>
+                      <p className="text-[9px] text-slate-400">* Admin is always included by default.</p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">説明</label>
                       <input type="text" value={docForm.description} onChange={(e) => setDocForm({...docForm, description: e.target.value})} className="w-full px-3 py-1.5 border border-slate-200 rounded text-xs outline-none" />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Content</label>
+                      <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">内容</label>
                       <textarea value={docForm.content} onChange={(e) => setDocForm({...docForm, content: e.target.value})} className="w-full h-32 px-3 py-1.5 border border-slate-200 rounded text-xs outline-none resize-none" />
                     </div>
                     <div className="p-3 bg-slate-50 rounded border border-dashed border-slate-200 text-center">
-                      <label className="text-[9px] font-black text-slate-400 uppercase block mb-1">Attachment</label>
+                      <label className="text-[9px] font-black text-slate-400 uppercase block mb-1">添付ファイル</label>
                       <input type="file" onChange={(e) => setSelectedFile(e.target.files?.[0] || null)} className="text-[10px] text-slate-500 w-full" />
                     </div>
                     <div className="pt-2 flex gap-2">
-                      <button type="button" onClick={() => { setIsEditing(false); setIsAddModalOpen(false); resetForm(); }} className="flex-1 px-3 py-2 border border-slate-200 text-slate-500 rounded text-[10px] font-black uppercase hover:bg-slate-50">Cancel</button>
-                      <button type="submit" disabled={isSubmitting} className="flex-1 px-3 py-2 bg-slate-800 text-white rounded text-[10px] font-black uppercase hover:bg-slate-700 disabled:opacity-50">{isSubmitting ? '...' : 'Save'}</button>
+                      <button type="button" onClick={() => { setIsEditing(false); setIsAddModalOpen(false); resetForm(); }} className="flex-1 px-3 py-2 border border-slate-200 text-slate-500 rounded text-[10px] font-black uppercase hover:bg-slate-50">キャンセル</button>
+                      <button type="submit" disabled={isSubmitting} className="flex-1 px-3 py-2 bg-slate-800 text-white rounded text-[10px] font-black uppercase hover:bg-slate-700 disabled:opacity-50">{isSubmitting ? '...' : '保存'}</button>
                     </div>
                   </form>
                 ) : selectedDoc && (
@@ -242,7 +273,7 @@ const DocumentsPage: React.FC = () => {
                     <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                       <div className="text-[9px] font-bold text-slate-300 uppercase">Updated: {new Date(selectedDoc.updated_at).toLocaleDateString()}</div>
                       <div className="flex gap-2">
-                        {selectedDoc.file_url && <button onClick={() => handleDownload(selectedDoc)} className="px-3 py-1.5 bg-blue-600 text-white text-[10px] font-black uppercase rounded shadow-sm hover:bg-blue-700 flex items-center gap-1.5"><Download size={12} /> Download</button>}
+                        {selectedDoc.file_url && <button onClick={() => handleDownload(selectedDoc)} className="px-3 py-1.5 bg-blue-600 text-white text-[10px] font-black uppercase rounded shadow-sm hover:bg-blue-700 flex items-center gap-1.5"><Download size={12} /> ダウンロード</button>}
                         {role === 'admin' && <button onClick={() => handleDelete(selectedDoc.id, selectedDoc.file_url)} className="text-slate-300 hover:text-red-500 transition-colors"><Trash2 size={14} /></button>}
                       </div>
                     </div>

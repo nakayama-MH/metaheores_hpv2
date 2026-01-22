@@ -1,176 +1,199 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Twitter, Facebook, Instagram, Youtube } from 'lucide-react';
+import { Twitter, Facebook, Instagram, Youtube, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const FOOTER_MAP = [
-  {
-    title: '企業情報',
-    path: '/about',
-    links: [
-      { label: '代表メッセージ', path: '/ceo-message' },
-      { label: '会社概要', path: '/about/profile' },
-      { label: 'MetaHeroesの使命', path: '/about/mission' },
-      { label: 'MetaHeroesについて', path: '/about/company' },
-      { label: '事業所・施設', path: '/about/offices' },
-      { label: '行動規範', path: '/about/conduct' },
-      { label: 'グループ会社', path: '/about/group' },
-    ]
-  },
-  {
-    title: '事業内容',
-    path: '/business',
-    links: [
-      { label: 'メタバース', path: '/business' },
-      { label: 'AI', path: '/business' },
-      { label: 'イベント', path: '/business' },
-      { label: '空きスペース', path: '/business' },
-    ]
-  },
-  {
-    title: 'サービス',
-    path: '/services',
-    links: [
-      { label: 'デジタルソリューション', path: '/services#digital' },
-      { label: '防災・教育・次世代育成', path: '/services#social' },
-      { label: '共創・コミュニティ', path: '/services#community' },
-    ]
-  },
-  {
-    title: '実績',
-    path: '/works',
-    links: [
-      { label: '実績一覧', path: '/works' },
-      { label: 'ギャラリー', path: '/gallery' },
-    ]
-  },
-  {
-    title: 'メンバー',
-    path: '/members',
-    links: [
-      { label: 'メンバーブログ一覧', path: '#' },
-    ]
-  },
-  {
-    title: 'その他',
-    path: '#',
-    links: [
-      { label: 'ニュース一覧', path: '/news' },
-      { label: '採用情報', path: '/recruit' },
-      { label: 'お問い合わせ', path: '/contact' },
-    ]
-  }
-];
-
-export const Footer: React.FC = () => {
-  return (
-    <footer className="bg-white border-t border-gray-100 pt-24 pb-12">
-      <svg width="0" height="0" className="absolute">
-        <defs>
-          <linearGradient id="footer-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#2563eb" />
-            <stop offset="100%" stopColor="#06b6d4" />
-          </linearGradient>
-        </defs>
-      </svg>
-
-      <div className="container mx-auto px-4 sm:px-8">
-        {/* Main Footer Links */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-12 mb-20">
-          {FOOTER_MAP.map((section) => (
-            <div key={section.title}>
-              <h3 className="text-gray-900 font-black text-sm tracking-widest mb-6 border-l-4 border-blue-600 pl-4">
-                {section.path !== '#' ? (
-                  <Link to={section.path} className="hover:text-blue-600 transition-colors">
-                    {section.title}
-                  </Link>
-                ) : (
-                  section.title
-                )}
-              </h3>
-              <ul className="space-y-4">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    {link.path.startsWith('http') ? (
-                      <a 
-                        href={link.path}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[13px] font-bold text-gray-500 hover:text-blue-600 transition-colors"
-                      >
-                        {link.label}
-                      </a>
-                    ) : (
-                      <Link 
-                        to={link.path}
-                        className="text-[13px] font-bold text-gray-500 hover:text-blue-600 transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
+const FOOTER_COLUMNS = [
+  // ... (Keep existing columns data)
+  // Column 1: Enterprise (7 items)
+  [
+    {
+      title: '企業情報',
+      path: '/about',
+      links: [
+        { label: '代表メッセージ', path: '/ceo-message' },
+        { label: '会社概要', path: '/about/profile' },
+        { label: 'MetaHeroesの使命', path: '/about/mission' },
+        { label: 'MetaHeroesについて', path: '/about/company' },
+        { label: '事業所・施設', path: '/about/offices' },
+        { label: '行動規範', path: '/about/conduct' },
+        { label: 'グループ会社', path: '/about/group' },
+      ]
+    }
+  ],
+  // Column 2: Business & Services (4 + 3 = 7 items)
+  [
+    {
+      title: '事業内容',
+      path: '/business',
+      links: [
+        { label: 'メタバース', path: '/business' },
+        { label: 'AI', path: '/business' },
+        { label: 'イベント', path: '/business' },
+        { label: '空きスペース', path: '/business' },
+      ]
+    },
+    {
+      title: 'サービス',
+      path: '/services',
+      links: [
+        { label: 'デジタルソリューション', path: '/services#digital' },
+        { label: '防災・教育・次世代育成', path: '/services#social' },
+        { label: '共創・コミュニティ', path: '/services#community' },
+      ]
+    }
+  ],
+  // Column 3: Works & Others (2 + 1 + 2 = 5 items)
+  [
+    {
+      title: '実績・メンバー',
+      path: '/works',
+      links: [
+        { label: '実績一覧', path: '/works' },
+        { label: 'ギャラリー', path: '/gallery' },
+        { label: 'メンバーブログ', path: '/news' },
+      ]
+    },
+        {
+          title: 'その他',
+          path: '#',
+          links: [
+            { label: 'ニュース一覧', path: '/news' },
+            { label: '採用情報', path: '/recruit' },
+            { label: 'お問い合わせ', path: '/contact' },
+            { label: '資料請求', path: '/document-request' },
+            { label: '代理店専用', path: '/agency-login' },
+          ]
+        }
+      ]
+    ];
+    
+    const FooterSection = ({ section }: { section: typeof FOOTER_COLUMNS[0][0] }) => {
+      const [isOpen, setIsOpen] = useState(false);
+    
+      return (
+        <div className="w-full border-b border-gray-100 last:border-0 md:border-0">
+          <button 
+            onClick={() => setIsOpen(!isOpen)}
+            className="w-full flex items-center justify-between py-4 md:py-0 md:cursor-default group"
+          >
+            <h3 className="text-gray-900 font-black text-sm tracking-widest md:mb-4 md:border-l-4 border-blue-600 md:pl-4">
+              {section.path !== '#' ? (
+                <Link to={section.path} className="hover:text-blue-600 transition-colors pointer-events-auto">
+                  {section.title}
+                </Link>
+              ) : (
+                section.title
+              )}
+            </h3>
+            <ChevronDown 
+              className={`w-5 h-5 text-gray-400 transition-transform duration-300 md:hidden ${isOpen ? 'rotate-180' : ''}`} 
+            />
+          </button>
+    
+          {/* Mobile Accordion Content */}
+          <AnimatePresence>
+            {isOpen && (
+              <motion.ul 
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden md:hidden pb-4 space-y-3"
+              >
+                            {section.links.map((link) => (
+                              <li key={link.label}>
+                                {link.path.startsWith('http') ? (
+                                  <a 
+                                    href={link.path}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`text-xs font-bold transition-colors block pl-4 ${
+                                      link.label === '代理店専用' 
+                                        ? 'text-blue-600 hover:text-gray-500' 
+                                        : 'text-gray-500 hover:text-blue-600'
+                                    }`}
+                                  >
+                                    {link.label}
+                                  </a>
+                                ) : (
+                                  <Link 
+                                    to={link.path}
+                                    className={`text-xs font-bold transition-colors block pl-4 ${
+                                      link.label === '代理店専用' 
+                                        ? 'text-blue-600 hover:text-gray-500' 
+                                        : 'text-gray-500 hover:text-blue-600'
+                                    }`}
+                                  >
+                                    {link.label}
+                                  </Link>
+                                )}
+                              </li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                
+                      {/* Desktop List (Always Visible) */}
+                      <ul className="hidden md:block space-y-3">
+                        {section.links.map((link) => (
+                          <li key={link.label}>
+                            {link.path.startsWith('http') ? (
+                              <a 
+                                href={link.path}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`text-[13px] font-bold transition-colors block ${
+                                  link.label === '代理店専用' 
+                                    ? 'text-blue-600 hover:text-gray-500' 
+                                    : 'text-gray-500 hover:text-blue-600'
+                                }`}
+                              >
+                                {link.label}
+                              </a>
+                            ) : (
+                              <Link 
+                                to={link.path}
+                                className={`text-[13px] font-bold transition-colors block ${
+                                  link.label === '代理店専用' 
+                                    ? 'text-blue-600 hover:text-gray-500' 
+                                    : 'text-gray-500 hover:text-blue-600'
+                                }`}
+                              >
+                                {link.label}
+                              </Link>
+                            )}
+                          </li>
+                        ))}
+                      </ul>        </div>
+      );
+    };
+    
+    export const Footer: React.FC = () => {
+      return (
+        <footer className="bg-white border-t border-gray-100 pt-10 md:pt-24 pb-12">
+          <svg width="0" height="0" className="absolute">
+            <defs>
+              <linearGradient id="footer-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#2563eb" />
+                <stop offset="100%" stopColor="#06b6d4" />
+              </linearGradient>
+            </defs>
+          </svg>
+    
+          <div className="container mx-auto px-4 sm:px-8">
+            {/* Main Footer Content */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-0 md:gap-y-12 mb-12">
+              {FOOTER_COLUMNS.map((column, colIndex) => (
+                <div key={colIndex} className="flex flex-col gap-0 md:gap-10">
+                  {column.map((section) => (
+                    <FooterSection key={section.title} section={section} />
+                  ))}
+                </div>
+              ))}
             </div>
-          ))}
-
-          {/* Action Buttons Column */}
-          <div className="flex flex-col gap-3">
-            <div className="h-5 mb-6 hidden lg:block" /> {/* Spacer for title alignment */}
-            
-            <Link
-              to="/contact"
-              className="group relative inline-flex items-center justify-center px-6 py-2 text-[13px] font-bold text-black bg-white border border-black rounded-full overflow-hidden transition-all duration-500 w-full"
-            >
-              <span className="absolute inset-0 w-full h-full bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10 h-6 overflow-hidden w-full text-center">
-                <div className="flex flex-col transition-all duration-500 ease-[0.23,1,0.32,1] group-hover:-translate-y-1/2">
-                  <span className="flex items-center justify-center h-6 group-hover:text-white transition-colors duration-500">
-                    お問い合わせ
-                  </span>
-                  <span className="flex items-center justify-center h-6 tracking-widest font-black uppercase text-[10px] text-white">
-                    Contact
-                  </span>
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              to="/document-request"
-              className="group relative inline-flex items-center justify-center px-6 py-2 text-[13px] font-bold text-black bg-white border border-black rounded-full overflow-hidden transition-all duration-500 w-full"
-            >
-              <span className="absolute inset-0 w-full h-full bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10 h-6 overflow-hidden w-full text-center">
-                <div className="flex flex-col transition-all duration-500 ease-[0.23,1,0.32,1] group-hover:-translate-y-1/2">
-                  <span className="flex items-center justify-center h-6 group-hover:text-white transition-colors duration-500">
-                    資料請求
-                  </span>
-                  <span className="flex items-center justify-center h-6 tracking-widest font-black uppercase text-[10px] text-white">
-                    Document
-                  </span>
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              to="/agency-login"
-              className="group relative inline-flex items-center justify-center px-6 py-2 text-[13px] font-bold text-black bg-white border border-black rounded-full overflow-hidden transition-all duration-500 w-full"
-            >
-              <span className="absolute inset-0 w-full h-full bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10 h-6 overflow-hidden w-full text-center">
-                <div className="flex flex-col transition-all duration-500 ease-[0.23,1,0.32,1] group-hover:-translate-y-1/2">
-                  <span className="flex items-center justify-center h-6 group-hover:text-white transition-colors duration-500">
-                    代理店専用
-                  </span>
-                  <span className="flex items-center justify-center h-6 tracking-widest font-black uppercase text-[10px] text-white">
-                    Agency
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center pt-12 border-t border-gray-50">
+    
+            <div className="flex flex-col items-center pt-10 md:pt-12 border-t border-gray-50">
           {/* Logo */}
           <Link to="/" className="mb-12 hover:opacity-80 transition-opacity">
             <img 

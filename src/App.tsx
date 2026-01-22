@@ -1,4 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { PageTitle } from './components/PageTitle';
 import { ScrollToTop } from './components/ScrollToTop';
 import { BlogDetailPage } from './pages/BlogDetailPage';
 import { MemberPage } from './pages/MemberPage';
@@ -34,7 +35,7 @@ import { GalleryPage } from './pages/GalleryPage';
 import { ContactPage } from './pages/ContactPage';
 import { ContactPrivacyPage } from './pages/ContactPrivacyPage';
 import { DocumentRequestPage } from './pages/DocumentRequestPage';
-import { RecruitPage } from './pages/RecruitPage';
+
 import LoginPage from './pages/agency/LoginPage';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
@@ -43,6 +44,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import AgencyLayout from './pages/agency/AgencyLayout';
 import DashboardPage from './pages/agency/DashboardPage';
 import DocumentsPage from './pages/agency/DocumentsPage';
+import EventsPage from './pages/agency/EventsPage';
 import ConnectPage from './pages/agency/ConnectPage';
 import { AdminPage } from './pages/agency/Placeholders';
 
@@ -57,24 +59,27 @@ function App() {
         {!isAgencyPage && <Header />}
         <div className="flex-grow">
           <Routes>
-            <Route path="/" element={<TopPage />} />
+            <Route path="/" element={<><PageTitle title="株式会社MetaHeroes | ヒーローと共創するメタバース・AIカンパニー" /><TopPage /></>} />
             
             {/* Agency Routes */}
-            <Route path="/agency-login" element={<LoginPage />} />
+            <Route path="/agency-login" element={<><PageTitle title="代理店ログイン | 株式会社MetaHeroes" /><LoginPage /></>} />
             <Route path="/agency" element={
               <ProtectedRoute>
                 <AgencyLayout />
               </ProtectedRoute>
             }>
-              <Route index element={<DashboardPage />} />
-              <Route path="documents" element={<DocumentsPage />} />
+              <Route index element={<><PageTitle title="代理店ダッシュボード | 株式会社MetaHeroes" /><DashboardPage /></>} />
+              <Route path="documents" element={<><PageTitle title="資料ライブラリ | 株式会社MetaHeroes" /><DocumentsPage /></>} />
+              <Route path="events" element={<><PageTitle title="イベント情報 | 株式会社MetaHeroes" /><EventsPage /></>} />
               <Route path="connect" element={
                 <ProtectedRoute allowedRoles={['agent']}>
+                  <PageTitle title="MHコネクト | 株式会社MetaHeroes" />
                   <ConnectPage />
                 </ProtectedRoute>
               } />
               <Route path="admin" element={
                 <ProtectedRoute allowedRoles={['admin']}>
+                  <PageTitle title="管理者設定 | 株式会社MetaHeroes" />
                   <AdminPage />
                 </ProtectedRoute>
               } />
@@ -89,7 +94,7 @@ function App() {
             <Route path="/about/privacy" element={<PrivacyPolicyPage />} />
             <Route path="/about/group" element={<GroupCompaniesPage />} />
             <Route path="/business" element={<BusinessContentPage />} />
-            <Route path="/recruit" element={<RecruitPage />} />
+
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/contact/privacy" element={<ContactPrivacyPage />} />
             <Route path="/contact" element={<ContactPage />} />
