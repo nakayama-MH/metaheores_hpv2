@@ -9,7 +9,9 @@ import {
   Menu, 
   X,
   Send,
-  Calendar
+  Calendar,
+  Link2,
+  Video
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -39,10 +41,22 @@ const AgencyLayout: React.FC = () => {
       roles: ['admin', 'agent', 'guest']
     },
     { 
+      label: '動画一覧', 
+      path: '/agency/videos', 
+      icon: Video,
+      roles: ['admin', 'agent', 'guest']
+    },
+    { 
       label: 'イベント情報', 
       path: '/agency/events', 
       icon: Calendar,
       roles: ['admin', 'agent']
+    },
+    { 
+      label: '関連リンク', 
+      path: '/agency/links', 
+      icon: Link2,
+      roles: ['admin', 'agent', 'guest']
     },
     { 
       label: '管理者設定', 
