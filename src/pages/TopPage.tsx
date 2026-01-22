@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getPickups, getBlogs, getAnnouncements, Blog } from '../lib/microcms';
+import { getPickups, getBlogs, Blog } from '../lib/microcms';
 import { BusinessContentSection } from '../components/BusinessContentSection';
 import { MovieSection } from '../components/MovieSection';
 
@@ -38,17 +38,15 @@ const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1620641788421-7a1c3
 export const TopPage: React.FC = () => {
   const [banners, setBanners] = useState<any[]>(STATIC_BANNERS);
   const [newsItems, setNewsItems] = useState<Blog[]>([]);
-  const [announcements, setAnnouncements] = useState<Blog[]>([]);
   const [currentIndex, setCurrentIndex] = useState(2);
   const [activeTab, setActiveTab] = useState('all');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [bannersData, newsData, announcementsData] = await Promise.all([
+        const [bannersData, newsData] = await Promise.all([
           getPickups(),
           getBlogs(20, undefined, { excludeCategoryId: 'announcement' }),
-          getAnnouncements(5)
         ]);
 
         if (bannersData.contents.length > 0) {
@@ -57,7 +55,6 @@ export const TopPage: React.FC = () => {
         }
 
         setNewsItems(newsData.contents);
-        setAnnouncements(announcementsData.contents);
       } catch (error) {
         console.error('Failed to fetch data:', error);
       }

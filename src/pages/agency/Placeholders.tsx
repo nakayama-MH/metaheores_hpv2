@@ -11,7 +11,6 @@ import {
   Settings,
   ShieldCheck,
   Users,
-  Building,
   Mail,
   X,
   Check,

@@ -66,7 +66,7 @@ export const BusinessContentSection: React.FC = () => {
 
         {/* List */}
         <div className="flex flex-col gap-12 md:gap-16">
-          {BUSINESS_ITEMS.map((item, index) => (
+          {BUSINESS_ITEMS.map((item) => (
             <div key={item.id} className="relative">
               <div className={`flex flex-col md:flex-row items-center ${
                 item.align === 'right' ? 'md:flex-row-reverse' : ''

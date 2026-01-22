@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Database } from '../../types/database.types';
 import { Calendar as CalendarIcon, ExternalLink, Loader2, LayoutList, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 

@@ -304,7 +304,7 @@ export const Header: React.FC = () => {
                 {/* Close Button (Optional redundancy if header button is covered, but here we keep header button visible) */}
                 
                 <nav className="flex-1 flex flex-col gap-6">
-                  {NAV_ITEMS.map((item, index) => (
+                  {NAV_ITEMS.map((item) => (
                     <div key={item.label} className="border-b border-gray-100 pb-4 last:border-0">
                       {item.children ? (
                         <div>
