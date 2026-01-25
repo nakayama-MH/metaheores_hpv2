@@ -12,14 +12,77 @@ export interface GalleryItem {
 }
 
 // マニュアルで追加するアイテム（YouTube動画など）
-// ここにYouTubeのリンクを追加してください
+// プレイリスト: https://www.youtube.com/playlist?list=PL6tegUkHuPE16ETn4uY_HDa2Ly68ulXV-
 const manualItems: GalleryItem[] = [
   {
-    id: 'yt-1',
+    id: 'yt-plist-1',
+    type: 'video',
+    title: '【会社紹介】Meta Heroes',
+    category: 'Brand',
+    youtubeUrl: 'https://www.youtube.com/watch?v=HwBMWaO27I8'
+  },
+  {
+    id: 'yt-plist-2',
+    type: 'video',
+    title: '【防災イベント】防災万博 大阪・関西万博',
+    category: 'Event',
+    youtubeUrl: 'https://www.youtube.com/watch?v=7thymifNrbE'
+  },
+  {
+    id: 'yt-plist-3',
+    type: 'video',
+    title: '【Fortnite】Meta Heroes プロモーションムービー',
+    category: 'Metaverse',
+    youtubeUrl: 'https://www.youtube.com/watch?v=TizqV76FOsg'
+  },
+  {
+    id: 'yt-plist-4',
+    type: 'video',
+    title: '【施設紹介】Hero Egg CM',
+    category: 'Service',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Qe6t5_rPVBc'
+  },
+  {
+    id: 'yt-plist-5',
+    type: 'video',
+    title: '【サービス紹介】EGG JAM CM',
+    category: 'Service',
+    youtubeUrl: 'https://www.youtube.com/watch?v=k2NCdmsgN74'
+  },
+  {
+    id: 'yt-plist-6',
+    type: 'video',
+    title: '【キャラクター紹介】Hero Egg オリジナルキャラクター 紹介トレイラー',
+    category: 'Brand',
+    youtubeUrl: 'https://www.youtube.com/watch?v=M4SG299zjBE'
+  },
+  {
+    id: 'yt-plist-7',
+    type: 'video',
+    title: '【ブランドムービー】Meta Heroes防災メタバース',
+    category: 'Brand',
+    youtubeUrl: 'https://www.youtube.com/watch?v=5VnxVYHR4A4'
+  },
+  {
+    id: 'yt-plist-8',
+    type: 'video',
+    title: '【オープニングムービー】防災万博',
+    category: 'Event',
+    youtubeUrl: 'https://www.youtube.com/watch?v=W3zB9PV5NeM'
+  },
+  {
+    id: 'yt-plist-9',
     type: 'video',
     title: '【教育イベント】みらいのたからばこ ゲームクリエイター体験',
     category: 'Education',
     youtubeUrl: 'https://www.youtube.com/watch?v=ytvh4r0n_Qw'
+  },
+  {
+    id: 'yt-plist-10',
+    type: 'video',
+    title: '【Fortnite】Meta Heroes 開発プローモーション',
+    category: 'Metaverse',
+    youtubeUrl: 'https://www.youtube.com/watch?v=7qmtXERUG5o'
   },
   {
     id: 'yt-2',
@@ -36,13 +99,6 @@ const manualItems: GalleryItem[] = [
     youtubeUrl: 'https://www.youtube.com/watch?v=v5IVC9ESJKc'
   },
   {
-    id: 'yt-4',
-    type: 'video',
-    title: '【サービス紹介】EGG JAM CM',
-    category: 'Service',
-    youtubeUrl: 'https://www.youtube.com/watch?v=k2NCdmsgN74'
-  },
-  {
     id: 'yt-5',
     type: 'video',
     title: '【Fortnite map PV】GOKO PARKOUR',
@@ -55,13 +111,6 @@ const manualItems: GalleryItem[] = [
     title: '【Fortnite map PV】FALAMENT',
     category: 'Metaverse',
     youtubeUrl: 'https://www.youtube.com/watch?v=YPlRJPGy7ro'
-  },
-  {
-    id: 'yt-7',
-    type: 'video',
-    title: '【オープニングムービー】防災万博',
-    category: 'Event',
-    youtubeUrl: 'https://www.youtube.com/watch?v=W3zB9PV5NeM'
   },
   {
     id: 'yt-8',
@@ -106,32 +155,11 @@ const manualItems: GalleryItem[] = [
     youtubeUrl: 'https://www.youtube.com/watch?v=FsFAqNp41Hc'
   },
   {
-    id: 'yt-14',
-    type: 'video',
-    title: '【防災イベント】防災万博 大阪・関西万博',
-    category: 'Event',
-    youtubeUrl: 'https://www.youtube.com/watch?v=7thymifNrbE'
-  },
-  {
     id: 'yt-15',
     type: 'video',
     title: '【Fortnite map PV】Yuki World race & openworld',
     category: 'Metaverse',
     youtubeUrl: 'https://www.youtube.com/watch?v=6-St2Ubn0zs'
-  },
-  {
-    id: 'yt-16',
-    type: 'video',
-    title: '【ブランドムービー】Meta Heroes防災メタバース',
-    category: 'Brand',
-    youtubeUrl: 'https://www.youtube.com/watch?v=5VnxVYHR4A4'
-  },
-  {
-    id: 'yt-17',
-    type: 'video',
-    title: '【キャラクター紹介】Hero Egg オリジナルキャラクター 紹介トレイラー',
-    category: 'Brand',
-    youtubeUrl: 'https://www.youtube.com/watch?v=M4SG299zjBE'
   },
   {
     id: 'yt-18',

@@ -101,7 +101,7 @@ export const BusinessContentPage: React.FC = () => {
     const fetchCaseStudies = async () => {
       setLoading(true);
       try {
-        const response = await getBlogs(4, undefined, {
+        const response = await getBlogs(10, undefined, {
           categoryId: CATEGORY_MAP[activeTab],
         });
         setCaseStudies(response.contents);
@@ -124,27 +124,27 @@ export const BusinessContentPage: React.FC = () => {
       <PageHero titleEn="BUSINESS OVERVIEW" titleJa="事業内容" />
 
       {/* Tab Navigation */}
-      <div className="container mx-auto px-4 max-w-6xl mb-24">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      <div className="container mx-auto px-4 max-w-5xl mb-16 md:mb-24">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {BUSINESS_TABS.map((tab) => {
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`group relative overflow-hidden rounded-xl aspect-[1.8/1] transition-all duration-500 shadow-sm ${
-                  isActive ? 'shadow-xl -translate-y-1' : 'opacity-50 grayscale hover:opacity-100 hover:grayscale-0'
+                className={`group relative h-14 md:h-20 overflow-hidden rounded-lg md:rounded-xl transition-all duration-500 ${
+                  isActive 
+                    ? 'ring-2 ring-blue-500 ring-offset-2 shadow-lg shadow-blue-500/20 translate-y-[-2px]' 
+                    : 'opacity-70 grayscale hover:opacity-100 hover:grayscale-0 hover:translate-y-[-1px]'
                 }`}
               >
-                <img src={tab.image} alt={tab.label} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className={`absolute inset-0 transition-colors duration-500 ${isActive ? 'bg-blue-600/20' : 'bg-black/40 group-hover:bg-black/20'}`} />
-                <div className="absolute inset-0 flex items-center justify-center p-4">
-                  <span className="text-white font-black text-xs md:text-sm tracking-widest text-center leading-tight">
+                <img src={tab.image} alt={tab.label} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className={`absolute inset-0 transition-colors duration-500 ${isActive ? 'bg-blue-600/30' : 'bg-black/50 group-hover:bg-black/30'}`} />
+                <div className="absolute inset-0 flex items-center justify-center p-2">
+                  <span className={`font-black text-[10px] md:text-xs tracking-widest text-center leading-tight transition-all duration-300 ${isActive ? 'text-white' : 'text-white/90 group-hover:text-white'}`}>
                     {tab.label}
                   </span>
                 </div>
-                {/* Active Indicator Bar */}
-                <div className={`absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 transition-transform duration-500 origin-left ${isActive ? 'scale-x-100' : 'scale-x-0'}`} />
               </button>
             );
           })}
@@ -195,14 +195,19 @@ export const BusinessContentPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
                 {currentContent.issues.map((issue, i) => (
-                  <div key={i} className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm flex flex-col items-center text-center space-y-6">
-                    <div className="w-16 h-16">
+                  <div 
+                    key={i} 
+                    className={`bg-white border border-gray-100 rounded-2xl p-4 md:p-8 shadow-sm flex flex-col items-center text-center space-y-4 md:space-y-6 ${
+                      i === 2 ? 'col-span-2 md:col-span-1' : 'col-span-1'
+                    }`}
+                  >
+                    <div className="w-10 h-10 md:w-16 md:h-16">
                       <img src={issue.icon} alt="" className="w-full h-full object-contain" />
                     </div>
-                    <h4 className="text-base font-black text-gray-800">{issue.label}</h4>
-                    <ul className="text-xs font-bold text-gray-400 space-y-2">
+                    <h4 className="text-[13px] md:text-base font-black text-gray-800 leading-tight">{issue.label}</h4>
+                    <ul className="text-[10px] md:text-xs font-bold text-gray-400 space-y-1 md:space-y-2">
                       {issue.points.map((p, j) => <li key={j}>・{p}</li>)}
                     </ul>
                   </div>
@@ -259,21 +264,21 @@ export const BusinessContentPage: React.FC = () => {
                   <p className="text-gray-400 font-bold tracking-widest">実績がまだありません</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="flex overflow-x-auto pb-8 md:grid md:grid-cols-4 gap-4 md:gap-6 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
                   {caseStudies.map((item) => (
-                    <Link key={item.id} to={`/blog/${item.id}`} className="group block">
-                      <div className="relative aspect-[4/3] overflow-hidden rounded-xl mb-4 bg-gray-100 shadow-sm border border-gray-50">
+                    <Link key={item.id} to={`/blog/${item.id}`} className="group block flex-shrink-0 w-[200px] md:w-auto">
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-lg md:rounded-xl mb-3 bg-gray-100 shadow-sm border border-gray-50">
                         <img 
                           src={item.eyecatch?.url || 'https://via.placeholder.com/800x600?text=No+Image'} 
                           alt={item.title} 
                           className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" 
                         />
                       </div>
-                      <div className="space-y-2 px-1">
-                        <time className="text-[10px] font-black text-gray-300 tracking-[0.2em] block">
+                      <div className="space-y-1.5 md:space-y-2 px-0.5">
+                        <time className="text-[8px] md:text-[10px] font-black text-gray-300 tracking-[0.1em] md:tracking-[0.2em] block">
                           {formatDate(item.publishedAt)}
                         </time>
-                        <h3 className="text-gray-800 text-sm font-black leading-snug line-clamp-2 group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-gray-800 text-[11px] md:text-sm font-black leading-snug line-clamp-2 group-hover:text-blue-600 transition-colors">
                           {item.title}
                         </h3>
                       </div>

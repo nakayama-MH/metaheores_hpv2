@@ -99,9 +99,9 @@ export const ServicesPage: React.FC = () => {
 
         {/* Overlay Text Content */}
         <div className="absolute inset-0 flex items-center">
-          <div className="container mx-auto px-4 md:px-24">
-            <div className="max-w-xl bg-white/20 backdrop-blur-sm md:backdrop-blur-none p-6 md:p-0 rounded-2xl">
-              <p className="text-gray-800 leading-[1.8] font-black tracking-widest text-sm md:text-lg drop-shadow-md">
+          <div className="container mx-auto px-6 md:px-24">
+            <div className="max-w-[55%] md:max-w-xl relative z-10">
+              <p className="text-[11px] md:text-lg font-black text-gray-800 leading-relaxed md:leading-[1.8] tracking-widest md:drop-shadow-md">
                 Meta Heroesは、メタバース開発やイベント、AI人材育成研修を始めとした、さまざまなサービスを展開しています。
               </p>
             </div>
@@ -110,14 +110,14 @@ export const ServicesPage: React.FC = () => {
       </section>
 
       {/* Category Icons Section with Gradient Background and Digital Wave Overlay */}
-      <section className="relative w-full bg-gradient-to-r from-blue-600 to-cyan-500 py-24 mb-32 overflow-hidden">
+      <section className="relative w-full bg-gradient-to-r from-blue-600 to-cyan-500 py-12 md:py-24 mb-0 overflow-hidden">
         {/* Decorative Wave Background */}
         <div className="absolute inset-0 pointer-events-none">
           <img src="/assets/services/top/bg_デジタルウェーブ.png" alt="" className="w-full h-full object-cover" />
         </div>
 
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
             {[
               { id: 'digital', label: 'デジタルソリューション', en: 'XR & AI Solutions', image: '/assets/services/top/デジタルソリューション_コンテナ.png', icon: '/assets/services/top/デジタルソリューション_icon.png' },
               { id: 'social', label: '防災・教育・次世代育成', en: 'Social & Education', image: '/assets/services/top/防災・教育・次世代育成_コンテナ.png', icon: '/assets/services/top/防災・教育・次世代育成_icon.png' },
@@ -126,17 +126,17 @@ export const ServicesPage: React.FC = () => {
               <button 
                 key={cat.id} 
                 onClick={() => scrollToSection(cat.id)}
-                className="relative group rounded-3xl overflow-hidden aspect-[16/9] shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-white/10 text-left"
+                className="relative group rounded-2xl md:rounded-3xl overflow-hidden h-24 md:aspect-[16/9] md:h-auto shadow-[0_10px_30px_rgba(0,0,0,0.2)] border border-white/10 text-left"
               >
                 <img src={cat.image} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="" />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-black p-6">
-                  <div className="w-12 h-12 mb-3">
+                <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
+                <div className="absolute inset-0 flex flex-row md:flex-col items-center justify-start md:justify-center text-black px-6 md:p-6 gap-4 md:gap-3">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0">
                     <img src={cat.icon} alt="" className="w-full h-full object-contain brightness-0 drop-shadow-lg" />
                   </div>
-                  <div className="text-center">
-                    <span className="text-[10px] font-bold tracking-[0.3em] uppercase block mb-1 text-black/80">{cat.en}</span>
-                    <span className="text-xl md:text-2xl font-black tracking-wider">{cat.label}</span>
+                  <div className="text-left md:text-center">
+                    <span className="text-[8px] md:text-[10px] font-bold tracking-[0.2em] uppercase block mb-0.5 text-black/80">{cat.en}</span>
+                    <span className="text-sm md:text-2xl font-black tracking-wider leading-tight">{cat.label}</span>
                   </div>
                 </div>
               </button>
@@ -146,11 +146,11 @@ export const ServicesPage: React.FC = () => {
       </section>
 
       {/* Filter Bar */}
-      <div className="sticky top-20 z-40 bg-white/95 backdrop-blur-xl border-y border-gray-100 py-10 mb-24">
-        <div className="container mx-auto px-4 max-w-5xl space-y-8">
-          <div className="flex flex-col md:flex-row md:items-center gap-6 justify-center">
+      <div className="sticky top-16 md:top-20 z-40 bg-white/95 backdrop-blur-xl border-y border-gray-100 py-4 md:py-6 mb-12 md:mb-16">
+        <div className="container mx-auto px-4 max-w-5xl space-y-4 md:space-y-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 justify-center">
             <span className="text-[11px] font-black text-gray-400 tracking-[0.2em] w-20 border-r border-gray-100 hidden md:block">種 類</span>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex overflow-x-auto scrollbar-hide gap-2 -mx-4 px-4 md:mx-0 md:px-0">
               {[
                 { id: 'all', label: 'すべて' },
                 { id: 'metaverse', label: 'メタバース' },
@@ -161,8 +161,8 @@ export const ServicesPage: React.FC = () => {
                 <button
                   key={btn.id}
                   onClick={() => setCategoryFilter(btn.id as ServiceCategory)}
-                  className={`px-8 py-2.5 rounded-full text-[11px] font-black tracking-widest transition-all duration-500 ${
-                    categoryFilter === btn.id ? 'bg-blue-600 text-white shadow-xl scale-105' : 'bg-gray-100/50 text-gray-400 hover:bg-gray-200/50 hover:text-gray-600'
+                  className={`px-4 md:px-8 py-2 rounded-full text-[10px] md:text-[11px] font-black tracking-widest transition-all duration-500 whitespace-nowrap flex-shrink-0 ${
+                    categoryFilter === btn.id ? 'bg-blue-600 text-white shadow-lg scale-105' : 'bg-gray-100/50 text-gray-400 hover:bg-gray-200/50 hover:text-gray-600'
                   }`}
                 >
                   {btn.label}

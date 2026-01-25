@@ -19,25 +19,25 @@ export const HeroSection = ({ member }: HeroSectionProps) => {
       />
 
       {/* メインコンテンツ */}
-      <div className="relative z-10 container mx-auto px-8 lg:px-16 flex flex-col justify-center min-h-screen">
+      <div className="relative z-10 container mx-auto px-4 md:px-8 lg:px-16 flex flex-col justify-center min-h-screen">
         {/* キャッチコピー */}
         <div className="w-full lg:w-[70%] mb-8">
           <h1
             className="font-bold text-gray-900 leading-[1.2] whitespace-pre-line"
-            style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
+            style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)' }}
           >
             {catchphrase.main}
           </h1>
           <p
             className="font-bold text-primary-blue italic"
-            style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}
+            style={{ fontSize: 'clamp(2rem, 6vw, 5.5rem)' }}
           >
             {catchphrase.emphasis}
           </p>
         </div>
 
         {/* 実績カード（画面中央） */}
-        <div className="w-full flex flex-nowrap gap-8 justify-center">
+        <div className="w-full flex flex-wrap md:flex-nowrap gap-4 md:gap-8 justify-center">
           {stats.map((stat, index) => (
             <StatCard key={index} stat={stat} />
           ))}

@@ -91,7 +91,7 @@ export const MovieSection: React.FC = () => {
   return (
     <section className="relative z-20 -mt-24 bg-transparent pb-0">
       {/* メインコンテナ */}
-      <div className="bg-white rounded-t-[60px] md:rounded-t-[100px] pt-16 pb-40 relative overflow-hidden shadow-[-10px_-10px_30px_rgba(0,0,0,0.1)]">
+      <div className="bg-white rounded-t-[60px] md:rounded-t-[100px] pt-8 md:pt-16 pb-12 md:pb-20 relative overflow-hidden shadow-[-10px_-10px_30px_rgba(0,0,0,0.1)]">
         
         <div className="container mx-auto px-4 relative z-10">
           {/* Header */}
@@ -148,6 +148,17 @@ export const MovieSection: React.FC = () => {
                   return (
                     <motion.div
                       key={video.id}
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.2}
+                      onDragEnd={(_, { offset, velocity }) => {
+                        const swipe = offset.x;
+                        if (swipe < -50 || velocity.x < -500) {
+                          nextSlide();
+                        } else if (swipe > 50 || velocity.x > 500) {
+                          prevSlide();
+                        }
+                      }}
                       initial={{ 
                         scale: 0.9, 
                         x: offset * 110 + '%',
@@ -155,16 +166,16 @@ export const MovieSection: React.FC = () => {
                         zIndex: isCenter ? 20 : 10
                       }}
                       animate={{ 
-                        scale: isCenter ? 1 : 0.9,
-                        x: offset * (window.innerWidth < 768 ? 110 : 75) + '%',
-                        opacity: isCenter ? 1 : 0.6,
+                        scale: isCenter ? 1 : 0.85,
+                        x: offset * (window.innerWidth < 768 ? 85 : 75) + '%',
+                        opacity: isCenter ? 1 : 0.4,
                         zIndex: isCenter ? 20 : 10
                       }}
                       transition={{ 
                         duration: 0.6,
                         ease: [0.16, 1, 0.3, 1]
                       }}
-                      className="absolute w-[85%] md:w-[70%] max-w-[700px]"
+                      className="absolute w-[70%] md:w-[70%] max-w-[700px] cursor-grab active:cursor-grabbing"
                     >
                       {/* Video Card Container */}
                       <div className={`
@@ -219,6 +230,17 @@ export const MovieSection: React.FC = () => {
                   );
                 })}
               </AnimatePresence>
+
+              {/* Character Image - PC表示の時さらに右上へ調整 */}
+              <div className="absolute top-[30%] md:top-[2%] left-[-35%] md:left-[-38%] w-[100%] md:w-[100%] pointer-events-none z-30">
+                {/* Shadow effect */}
+                <div className="absolute bottom-12 left-12 right-12 h-12 bg-black/20 blur-[50px] rounded-[100%]" />
+                <img
+                  src="/assets/top/egg_chara_test.gif"
+                  alt=""
+                  className="w-full h-auto relative drop-shadow-2xl rotate-[-5deg]"
+                />
+              </div>
             </div>
           </div>
 
@@ -233,17 +255,6 @@ export const MovieSection: React.FC = () => {
               もっと見る
             </a>
           </div>
-        </div>
-
-        {/* Character Image - 位置調整 (右上へ) */}
-        <div className="absolute bottom-[80px] md:bottom-[0px] left-[-30px] md:left-[-10px] lg:left-[5%] w-[250px] md:w-[450px] lg:w-[600px] pointer-events-none z-30">
-           {/* Shadow effect */}
-           <div className="absolute bottom-8 left-12 right-12 h-10 bg-black/30 blur-[40px] rounded-[100%]" />
-           <img
-            src="/assets/top/キャラクター.png"
-            alt=""
-            className="w-full h-auto relative drop-shadow-2xl rotate-[-5deg]"
-          />
         </div>
       </div>
     </section>

@@ -98,14 +98,14 @@ export const CompanyProfilePage: React.FC = () => {
           {profileData.map((item, index) => (
             <div 
               key={index} 
-              className="flex flex-col md:flex-row py-8 md:py-12 border-b border-gray-100 gap-3 md:gap-0"
+              className="flex flex-row py-8 md:py-12 border-b border-gray-100 gap-0"
             >
-              <div className="w-full md:w-1/3">
+              <div className="w-1/3">
                 <h3 className="text-sm font-black text-gray-400 md:text-gray-800 tracking-widest uppercase md:normal-case">
                   {item.label}
                 </h3>
               </div>
-              <div className="w-full md:w-2/3">
+              <div className="w-2/3">
                 <div className="text-base md:text-lg font-medium text-gray-700 leading-relaxed">
                   {item.content}
                 </div>

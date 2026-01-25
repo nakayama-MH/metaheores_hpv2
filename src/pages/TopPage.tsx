@@ -92,7 +92,7 @@ export const TopPage: React.FC = () => {
   return (
     <main className="min-h-screen bg-white">
       {/* ... (Hero Slider Section remains the same) */}
-      <section className="relative pt-32 md:pt-48 pb-0 overflow-hidden bg-gradient-to-r from-blue-600 to-cyan-500">
+      <section className="relative pt-24 md:pt-48 pb-0 overflow-hidden bg-gradient-to-r from-blue-600 to-cyan-500">
         <div className="container mx-auto px-4 relative">
           {/* Main Slider - Consistent size for all slides */}
           <div className="relative flex items-center justify-center h-[200px] md:h-[480px] mb-12 md:mb-28 overflow-visible">
@@ -187,7 +187,7 @@ export const TopPage: React.FC = () => {
             viewport={{ once: true }}
             className="text-white drop-shadow-2xl pb-2"
           >
-            <div className="text-4xl md:text-7xl font-black italic tracking-tighter leading-none">
+            <div className="text-3xl md:text-7xl font-black italic tracking-tighter leading-none">
               2044年
             </div>
           </motion.div>
@@ -202,7 +202,7 @@ export const TopPage: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <div className="inline-block text-2xl md:text-5xl font-black tracking-tight leading-none bg-gradient-to-r from-[#2563eb] to-[#06b6d4] bg-clip-text text-transparent">
+            <div className="inline-block text-xl md:text-5xl font-black tracking-tight leading-none bg-gradient-to-r from-[#2563eb] to-[#06b6d4] bg-clip-text text-transparent">
               HERO100つくる
             </div>
           </motion.div>
@@ -357,28 +357,28 @@ export const TopPage: React.FC = () => {
       <MovieSection />
 
       {/* Category Grid Section */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-12 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-6xl mx-auto">
             {[
               { label: '企業情報', iconPath: '/assets/top/company_icon.png', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800' },
               { label: 'サービス', iconPath: '/assets/top/service_icon.png', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800' },
               { label: '採用', iconPath: '/assets/top/recruit_icon.png', image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=800' },
               { label: 'ブログ', iconPath: '/assets/top/blog_icon.png', image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=800' },
             ].map((cat, idx) => (
-              <a key={idx} href="#" className="relative group aspect-[3/4] rounded-[2rem] overflow-hidden shadow-xl">
+              <a key={idx} href="#" className="relative group aspect-square md:aspect-[3/4] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-xl">
                 <img src={cat.image} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/60 transition-colors" />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white gap-5">
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white gap-2 md:gap-5">
                   <motion.div 
                     whileHover={{ scale: 1.1, rotate: 5 }}
-                    className="w-20 h-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center shadow-2xl"
+                    className="w-12 h-12 md:w-20 md:h-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center shadow-2xl"
                   >
-                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center p-3">
+                    <div className="w-8 h-8 md:w-16 md:h-16 bg-white rounded-full flex items-center justify-center p-2 md:p-3">
                       <img src={cat.iconPath} alt={cat.label} className="w-full h-full object-contain" />
                     </div>
                   </motion.div>
-                  <span className="text-base font-black tracking-[0.3em]">{cat.label}</span>
+                  <span className="text-xs md:text-base font-black tracking-[0.2em] md:tracking-[0.3em]">{cat.label}</span>
                 </div>
               </a>
             ))}

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { PageHero } from '../../components/PageHero';
 import { Link } from 'react-router-dom';
 import { getBlogs, Blog } from '../../lib/microcms';
+import { ServiceIntroBanner } from '../../components/ServiceIntroBanner';
 
 export const HeroExpoPage: React.FC = () => {
+// ... (state and fetch)
   const [news, setNews] = useState<Blog[]>([]);
   const [works, setWorks] = useState<Blog[]>([]);
 
@@ -33,49 +35,11 @@ export const HeroExpoPage: React.FC = () => {
         titleJa="HERO EXPO"
       />
 
-      {/* Full Width Hero Banner with Overlay */}
-      <section className="relative w-full mb-24 overflow-hidden">
-        <img 
-          src="/assets/services/hero-expo/hero-thumbnail.png" 
-          alt="HERO EXPO" 
-          className="w-full h-auto"
-        />
-        
-        {/* Overlay Content */}
-        <div className="absolute inset-0 flex items-center">
-          <div className="container mx-auto px-4 md:px-24">
-            <div className="max-w-2xl space-y-6 md:space-y-10">
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-medium leading-relaxed tracking-wide text-gray-800 drop-shadow-sm">
-                地域とテクノロジーがつながる<br />
-                メタバース・XR・AIなどの技術<br />
-                を体験・発表プロジェクト。
-              </h2>
-              <div className="flex flex-wrap gap-4">
-                <a 
-                  href="https://meta-heroes.co.jp" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-2 md:py-3 bg-gray-900 text-white text-[10px] md:text-sm font-bold rounded-full hover:bg-gray-700 transition-colors min-w-[140px] md:min-w-[160px] shadow-lg"
-                >
-                  公式サイト
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3 md:w-4 md:h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                  </svg>
-                </a>
-                <a 
-                  href="#works"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-2 md:py-3 bg-white/90 backdrop-blur-sm text-gray-800 text-[10px] md:text-sm font-bold rounded-full hover:bg-white transition-colors min-w-[140px] md:min-w-[160px] shadow-lg"
-                >
-                  実績一覧
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3 md:w-4 md:h-4 text-cyan-500">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ServiceIntroBanner 
+        image="/assets/services/hero-expo/hero-thumbnail.png"
+        title="地域とテクノロジーがつながるメタバース・XR・AIなどの技術を体験・発表プロジェクト。"
+        websiteUrl="https://meta-heroes.co.jp"
+      />
 
       {/* Concept Section - Full Width Gray Background */}
       <section className="bg-gray-50 py-20 md:py-32 mb-32">
@@ -111,7 +75,7 @@ export const HeroExpoPage: React.FC = () => {
             自治体、企業、子どもたちが一体となってテクノロジーの社会実装の可能性を探求・発表する場を提供します。
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
             {[
               { 
                 title: 'オールスター展示', 
@@ -129,12 +93,17 @@ export const HeroExpoPage: React.FC = () => {
                 desc: '投資家、自治体、企業担当者が直接対話できるネットワーキング' 
               }
             ].map((feature, idx) => (
-              <div key={idx} className="border border-gray-100 rounded-xl p-8 flex flex-col items-center text-center shadow-sm bg-white h-full">
-                <div className="w-24 h-24 mb-8 flex items-center justify-center">
+              <div 
+                key={idx} 
+                className={`border border-gray-100 rounded-xl p-4 md:p-8 flex flex-col items-center text-center shadow-sm bg-white h-full ${
+                  idx === 2 ? 'col-span-2 md:col-span-1' : 'col-span-1'
+                }`}
+              >
+                <div className="w-16 h-16 md:w-24 md:h-24 mb-4 md:mb-8 flex items-center justify-center">
                   <img src={feature.icon} alt={feature.title} className="w-full h-full object-contain" />
                 </div>
-                <h4 className="text-lg font-bold text-gray-900 mb-6">{feature.title}</h4>
-                <p className="text-sm text-gray-600 leading-[1.8] font-medium text-left w-full tracking-wide">
+                <h4 className="text-sm md:text-lg font-bold text-gray-900 mb-3 md:mb-6">{feature.title}</h4>
+                <p className="text-[11px] md:text-sm text-gray-600 leading-relaxed md:leading-[1.8] font-medium text-left w-full tracking-wide">
                   {feature.desc}
                 </p>
               </div>

@@ -19,15 +19,15 @@ export const WorksPage: React.FC = () => {
     const fetchCategories = async () => {
       try {
         const response = await client.get({ endpoint: 'categories' });
-        setCategories(response.contents);
+        // 「実績」または「事例」という文字が含まれるカテゴリのみに絞り込む
+        const filtered = response.contents.filter((cat: Category) => 
+          cat.name.includes('実績') || cat.name.includes('事例')
+        );
+        setCategories(filtered);
       } catch (e) {
         console.warn('Categories error:', e);
         setCategories([
-           { id: 'case-study', name: 'CASE STUDY' },
-           { id: 'metaverse', name: 'METAVERSE' },
-           { id: 'ai', name: 'AI' },
-           { id: 'event', name: 'EVENT' },
-           { id: 'xr', name: 'XR' },
+           { id: 'case-study', name: '実績・事例' },
         ]);
       }
     };
@@ -44,7 +44,13 @@ export const WorksPage: React.FC = () => {
           year: selectedYear,
           keyword: searchQuery
         });
-        setWorks(response.contents);
+        
+        // カテゴリ名に「実績」または「事例」が含まれる記事のみを表示
+        const filteredWorks = response.contents.filter(item => 
+          item.category?.name.includes('実績') || item.category?.name.includes('事例')
+        );
+        
+        setWorks(filteredWorks);
       } catch (error) {
         console.error('Failed to fetch works:', error);
       } finally {

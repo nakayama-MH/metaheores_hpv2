@@ -15,33 +15,33 @@ export const AboutPage: React.FC = () => {
       {/* CEO Banner Section */}
       <section className="relative w-full overflow-hidden bg-white">
         {/* Base Image */}
-        <div className="w-full h-auto min-h-[450px] md:min-h-0 relative">
+        <div className="w-full h-auto min-h-[280px] md:min-h-0 relative">
           <img 
             src="/assets/about/ceo_hero.png" 
             alt="CEO 松石 和俊" 
-            className="w-full h-full object-cover md:h-auto absolute inset-0 md:relative"
+            className="w-full h-full object-cover object-top md:h-auto absolute inset-0 md:relative"
           />
         </div>
 
         {/* Overlay Text Content - Middle Left for both mobile and PC */}
         <div className="absolute inset-0 flex items-center">
-          <div className="container mx-auto px-10 md:px-24">
+          <div className="container mx-auto px-6 md:px-24">
             <div className="max-w-md relative z-10">
-              <p className="text-xs md:text-sm font-bold text-gray-500 mb-1 md:mb-2">代表取締役社長CEO</p>
-              <h2 className="text-3xl md:text-5xl font-black text-gray-800 mb-4 md:mb-8 tracking-tighter">
+              <p className="text-[10px] md:text-sm font-bold text-gray-500 mb-1 md:mb-2">代表取締役社長CEO</p>
+              <h2 className="text-xl md:text-5xl font-black text-gray-800 mb-2 md:mb-8 tracking-tighter">
                 松石 和俊
               </h2>
-              <div className="space-y-1 mb-6 md:mb-10">
-                <p className="text-base md:text-xl font-bold text-gray-800 leading-tight">
+              <div className="space-y-0 md:space-y-1 mb-4 md:mb-10">
+                <p className="text-[13px] md:text-xl font-bold text-gray-800 leading-tight">
                   Society 5.0/SDGsを目指す
                 </p>
-                <p className="text-base md:text-xl font-bold text-gray-800 leading-tight">
+                <p className="text-[13px] md:text-xl font-bold text-gray-800 leading-tight">
                   株式会社Meta Heroesの挑戦
                 </p>
               </div>
               <Link 
                 to="/ceo-message" 
-                className="inline-flex items-center gap-3 px-6 md:px-8 py-2 md:py-3 bg-[#333] text-white text-[10px] md:text-sm font-bold rounded-full hover:bg-black transition-all group"
+                className="inline-flex items-center gap-2 md:gap-3 px-5 md:px-8 py-2 md:py-3 bg-[#333] text-white text-[9px] md:text-sm font-bold rounded-full hover:bg-black transition-all group"
               >
                 CEOからのメッセージ
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform">

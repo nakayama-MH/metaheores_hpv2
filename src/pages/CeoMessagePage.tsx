@@ -22,7 +22,7 @@ export const CeoMessagePage: React.FC = () => {
         {/* Catchphrase & Profile */}
         <div className="mb-20">
           <h2 className="text-2xl md:text-3xl font-black text-gray-800 mb-12 leading-tight tracking-tight">
-            境界線を超えて、誰もがHEROになれる世界へ
+            境界線を超えて、<br />誰もがHEROになれる世界へ
           </h2>
           
           <div className="border-t border-gray-100 pt-12">

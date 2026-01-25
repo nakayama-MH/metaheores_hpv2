@@ -19,7 +19,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
   return (
     <section 
       className={`relative flex items-center justify-center overflow-hidden ${
-        isFullHeight ? 'h-[80vh] min-h-[600px]' : 'pt-40 pb-20 md:pt-48 md:pb-24'
+        isFullHeight ? 'h-[80vh] min-h-[500px] md:min-h-[600px]' : 'pt-32 pb-16 md:pt-48 md:pb-24'
       } ${!backgroundImage ? 'bg-white' : ''}`}
     >
       {/* Background Image & Overlay */}
@@ -42,15 +42,15 @@ export const PageHero: React.FC<PageHeroProps> = ({
           className="flex flex-col items-center"
         >
           {/* English Category Label */}
-          <span className={`text-[10px] md:text-xs font-black tracking-[0.4em] uppercase mb-4 ${
+          <span className={`text-xs font-black tracking-[0.4em] uppercase mb-4 ${
             backgroundImage ? 'text-white/80' : 'text-gray-400'
           }`}>
             {titleEn}
           </span>
           
           {/* Main Titles */}
-          <div className="flex flex-col items-center gap-6">
-            <h1 className={`text-4xl md:text-5xl font-black tracking-tight leading-tight ${
+          <div className="flex flex-col items-center gap-4 md:gap-6">
+            <h1 className={`text-3xl md:text-5xl font-black tracking-tight leading-tight ${
               backgroundImage ? 'text-white drop-shadow-2xl' : 'text-gray-900'
             }`}>
               {titleJa}
@@ -62,7 +62,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
             }`} />
 
             {subText && (
-              <p className={`text-base md:text-lg font-bold tracking-[0.1em] mt-2 ${
+              <p className={`text-lg font-bold tracking-[0.1em] mt-2 ${
                 backgroundImage ? 'text-white opacity-90' : 'text-gray-500'
               }`}>
                 {subText}

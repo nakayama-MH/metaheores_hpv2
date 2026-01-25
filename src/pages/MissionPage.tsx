@@ -100,45 +100,30 @@ export const MissionPage: React.FC = () => {
         
 
                     {/* Value Cards */}
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
                       {[
-
                         { label: '光', en: 'HOPE', icon: '/assets/mission/バリュー_光.png', text: '社会にとって価値のある未来のビジョンを描き、仲間に共有する。' },
-
                         { label: '火', en: 'WELL', icon: '/assets/mission/バリュー_火.png', text: '自分自身の力で新しい仕組みを生み出す勇気と情熱を持つ。' },
-
                         { label: '水', en: 'SOLVE', icon: '/assets/mission/バリュー_水.png', text: '役割や立場を超えて、課題に柔軟に対応する。' },
-
-                      ].map((value) => (
-
-                        <div key={value.label} className="border border-gray-100 rounded-2xl p-10 flex flex-col items-center text-center space-y-6">
-
-                          <span className="text-[10px] font-bold text-gray-400 tracking-widest">{value.en}</span>
-
-                          <div className="space-y-4">
-
-                            <h4 className="text-3xl font-black text-gray-800">{value.label}</h4>
-
-                            <div className="w-16 h-16 mx-auto">
-
+                      ].map((value, idx) => (
+                        <div 
+                          key={value.label} 
+                          className={`border border-gray-100 rounded-2xl p-4 md:p-10 flex flex-col items-center text-center space-y-4 md:space-y-6 ${
+                            idx === 2 ? 'col-span-2 md:col-span-1' : 'col-span-1'
+                          }`}
+                        >
+                          <span className="text-[8px] md:text-[10px] font-bold text-gray-400 tracking-widest">{value.en}</span>
+                          <div className="space-y-2 md:space-y-4">
+                            <h4 className="text-xl md:text-3xl font-black text-gray-800">{value.label}</h4>
+                            <div className="w-10 h-10 md:w-16 md:h-16 mx-auto">
                               <img src={value.icon} alt={value.label} className="w-full h-full object-contain" />
-
                             </div>
-
                           </div>
-
-                          <p className="text-sm font-medium text-gray-600 leading-relaxed">
-
+                          <p className="text-[11px] md:text-sm font-medium text-gray-600 leading-relaxed">
                             {value.text}
-
                           </p>
-
                         </div>
-
                       ))}
-
                     </div>
 
                   </div>

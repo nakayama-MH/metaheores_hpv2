@@ -43,7 +43,7 @@ const BUSINESS_ITEMS = [
 
 export const BusinessContentSection: React.FC = () => {
   return (
-    <section className="relative pt-24 pb-64 overflow-hidden bg-slate-900">
+    <section className="relative pt-12 md:pt-24 pb-32 md:pb-64 overflow-hidden bg-slate-900">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
@@ -94,12 +94,14 @@ export const BusinessContentSection: React.FC = () => {
                   <motion.div
                     initial={{ opacity: 0, scaleX: 0 }}
                     whileInView={{ opacity: 1, scaleX: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
+                    viewport={{ once: true, margin: "-20%" }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className={`absolute bottom-8 h-16 md:h-20 bg-white shadow-xl flex items-center
+                    className={`absolute bottom-8 h-16 md:h-20 bg-white shadow-xl flex items-center z-30
+                      w-[100vw] left-[calc(50%-50vw)] justify-center origin-center
+                      md:w-[100vw]
                       ${item.align === 'left' 
-                        ? 'right-0 w-[100vw] origin-right md:rounded-l-full justify-end pr-10' 
-                        : 'left-0 w-[100vw] origin-left md:rounded-r-full justify-start pl-10'
+                        ? 'md:left-auto md:right-0 md:origin-right md:justify-end md:pr-10 md:pl-0 md:rounded-l-full' 
+                        : 'md:right-auto md:left-0 md:origin-left md:justify-start md:pl-10 md:pr-0 md:rounded-r-full'
                       }
                     `}
                   >
