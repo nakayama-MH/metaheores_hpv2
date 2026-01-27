@@ -95,7 +95,7 @@ export const MovieSection: React.FC = () => {
         
         <div className="container mx-auto px-4 relative z-10">
           {/* Header */}
-          <div className="text-center mb-10">
+          <div className="text-center mb-4 md:mb-10">
             <span className="text-[11px] font-bold tracking-[0.1em] block mb-3 uppercase text-gray-400 font-sans">
               MOVIE
             </span>
@@ -106,7 +106,7 @@ export const MovieSection: React.FC = () => {
           </div>
 
           {/* Carousel Area */}
-          <div className="relative max-w-[1200px] mx-auto h-[320px] md:h-[500px] flex items-center justify-center mb-10">
+          <div className="relative max-w-[1200px] mx-auto h-[320px] md:h-[500px] flex items-center justify-center mb-6 md:mb-10">
             
             {/* Prev Button */}
             <button 
@@ -166,8 +166,8 @@ export const MovieSection: React.FC = () => {
                         zIndex: isCenter ? 20 : 10
                       }}
                       animate={{ 
-                        scale: isCenter ? 1 : 0.85,
-                        x: offset * (window.innerWidth < 768 ? 85 : 75) + '%',
+                        scale: isCenter ? 1 : 0.8,
+                        x: offset * (window.innerWidth < 768 ? 95 : 75) + '%',
                         opacity: isCenter ? 1 : 0.4,
                         zIndex: isCenter ? 20 : 10
                       }}
@@ -175,7 +175,7 @@ export const MovieSection: React.FC = () => {
                         duration: 0.6,
                         ease: [0.16, 1, 0.3, 1]
                       }}
-                      className="absolute w-[70%] md:w-[70%] max-w-[700px] cursor-grab active:cursor-grabbing"
+                      className="absolute w-[85%] md:w-[70%] max-w-[700px] cursor-grab active:cursor-grabbing"
                     >
                       {/* Video Card Container */}
                       <div className={`
@@ -219,8 +219,8 @@ export const MovieSection: React.FC = () => {
                         </div>
 
                         {/* Title Area */}
-                        <div className="py-6 px-4 text-center bg-white min-h-[5rem] flex items-center justify-center">
-                          <h3 className="text-lg md:text-xl font-bold text-gray-800 tracking-wide line-clamp-2">
+                        <div className="py-3 md:py-6 px-4 text-center bg-white min-h-[3.5rem] md:min-h-[5rem] flex items-center justify-center">
+                          <h3 className="text-sm md:text-xl font-bold text-gray-800 tracking-wide line-clamp-2">
                             {video.title}
                           </h3>
                         </div>
