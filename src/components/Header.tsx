@@ -33,7 +33,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: 'メタバース', path: '/business' },
       { label: 'AI', path: '/business' },
       { label: 'イベント', path: '/business' },
-      { label: '空きスペース', path: '/business' },
+      { label: '施設運営事業', path: '/business' },
     ]
   },
   {

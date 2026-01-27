@@ -201,7 +201,7 @@ const VideosPage: React.FC = () => {
     if (video.thumbnail_url) return video.thumbnail_url;
     const ytId = getYouTubeId(video.url);
     if (ytId) return `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
-    return 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop';
+    return '/assets/top/business_bg.png';
   };
 
   const filteredVideos = videos.filter(video => {

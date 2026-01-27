@@ -12,6 +12,8 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.90.1",
     "@tailwindcss/typography": "^0.5.19",
+    "axios": "^1.13.3",
+    "cheerio": "^1.2.0",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",
     "microcms-js-sdk": "^3.2.0",

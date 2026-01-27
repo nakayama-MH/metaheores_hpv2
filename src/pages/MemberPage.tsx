@@ -72,7 +72,7 @@ export const MemberPage = () => {
       </div>
 
       <motion.div 
-        className="relative z-10"
+        className="relative z-30"
         style={{ y: skillsY }}
       >
         <SkillsSection skills={member.skills} caseStudy={member.caseStudy} />

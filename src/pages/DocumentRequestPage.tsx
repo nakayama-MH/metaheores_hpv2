@@ -12,6 +12,8 @@ interface FormData {
   name: string;
   email: string;
   documents: string[];
+  sources: string[];
+  sourceDetails: string;
   content: string;
 }
 
@@ -21,6 +23,8 @@ const INITIAL_DATA: FormData = {
   name: '',
   email: '',
   documents: [],
+  sources: [],
+  sourceDetails: '',
   content: '',
 };
 
@@ -30,6 +34,16 @@ const AVAILABLE_DOCUMENTS = [
   { id: 'training', label: 'AI人材育成研修 サービス案内' },
   { id: 'holoshare', label: 'ホロシェア (Holoshare) サービス資料' },
   { id: 'xr', label: 'XRソリューション 実績・活用ガイド' },
+];
+
+const SOURCE_OPTIONS = [
+  { id: 'hp', label: 'ホームページ' },
+  { id: 'event', label: 'イベント・セミナー' },
+  { id: 'media', label: 'webサイトの記事やニュースメディア' },
+  { id: 'search', label: '検索' },
+  { id: 'introduction', label: '知人からの紹介' },
+  { id: 'sns', label: 'ソーシャルネットワーク' },
+  { id: 'other', label: 'その他' },
 ];
 
 export const DocumentRequestPage: React.FC = () => {
@@ -43,12 +57,12 @@ export const DocumentRequestPage: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (id: string) => {
+  const handleCheckboxChange = (field: 'documents' | 'sources', id: string) => {
     setFormData(prev => ({
       ...prev,
-      documents: prev.documents.includes(id)
-        ? prev.documents.filter(item => item !== id)
-        : [...prev.documents, id]
+      [field]: prev[field].includes(id)
+        ? prev[field].filter(item => item !== id)
+        : [...prev[field], id]
     }));
   };
 
@@ -133,7 +147,7 @@ export const DocumentRequestPage: React.FC = () => {
                               type="checkbox"
                               className="sr-only"
                               checked={formData.documents.includes(doc.id)}
-                              onChange={() => handleCheckboxChange(doc.id)}
+                              onChange={() => handleCheckboxChange('documents', doc.id)}
                             />
                             <div className={`w-5 h-5 border-2 transition-all rounded-sm flex items-center justify-center ${formData.documents.includes(doc.id) ? 'border-blue-600 bg-blue-50' : 'border-gray-300 bg-white'}`}>
                               <svg className={`w-3.5 h-3.5 text-blue-600 transition-transform ${formData.documents.includes(doc.id) ? 'scale-100' : 'scale-0'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -141,6 +155,43 @@ export const DocumentRequestPage: React.FC = () => {
                             <span className="text-sm font-bold text-gray-700 group-hover:text-blue-600 transition-colors">{doc.label}</span>
                           </label>
                         ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 知ったきっかけ */}
+                  <div className="grid md:grid-cols-[280px,1fr] border-b border-gray-200">
+                    <label className="bg-gray-50 px-8 py-8 flex items-start gap-3 pt-10">
+                      <span className="bg-gray-400 text-white text-[9px] font-black px-1.5 py-0.5 rounded-sm mt-1">任意</span>
+                      <span className="font-bold text-gray-900 text-sm">当サイト・弊社を<br/>知ったきっかけ</span>
+                    </label>
+                    <div className="px-8 py-8 bg-white space-y-6">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {SOURCE_OPTIONS.map(opt => (
+                          <label key={opt.id} className="flex items-center gap-3 cursor-pointer group">
+                            <input
+                              type="checkbox"
+                              className="sr-only"
+                              checked={formData.sources.includes(opt.id)}
+                              onChange={() => handleCheckboxChange('sources', opt.id)}
+                            />
+                            <div className={`w-5 h-5 border-2 transition-all rounded-sm flex items-center justify-center ${formData.sources.includes(opt.id) ? 'border-blue-600 bg-blue-50' : 'border-gray-300 bg-white'}`}>
+                              <svg className={`w-3.5 h-3.5 text-blue-600 transition-transform ${formData.sources.includes(opt.id) ? 'scale-100' : 'scale-0'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            </div>
+                            <span className="text-sm font-bold text-gray-700 group-hover:text-blue-600 transition-colors">{opt.label}</span>
+                          </label>
+                        ))}
+                      </div>
+                      <div className="pt-2">
+                        <p className="text-[11px] font-bold text-gray-400 mb-2">具体的な内容（イベント名、媒体名、紹介者様など）</p>
+                        <textarea 
+                          name="sourceDetails" 
+                          value={formData.sourceDetails} 
+                          onChange={handleInputChange} 
+                          rows={2} 
+                          placeholder="例：〇〇展示会でのブース、△△ニュースの紹介記事など" 
+                          className="w-full border border-gray-300 py-3 px-4 outline-none font-bold resize-none text-sm" 
+                        />
                       </div>
                     </div>
                   </div>
@@ -224,6 +275,8 @@ export const DocumentRequestPage: React.FC = () => {
                 </div>
                 <div className="border-t-2 border-gray-900 bg-gray-50/30">
                   <ConfirmRow label="ご希望の資料" value={formData.documents.map(id => AVAILABLE_DOCUMENTS.find(d => d.id === id)?.label).join(', ')} />
+                  <ConfirmRow label="知ったきっかけ" value={formData.sources.map(id => SOURCE_OPTIONS.find(o => o.id === id)?.label).join(', ')} />
+                  {formData.sourceDetails && <ConfirmRow label="きっかけの詳細" value={formData.sourceDetails} />}
                   <ConfirmRow label="貴社名 / 組織名" value={formData.company} />
                   {formData.department && <ConfirmRow label="部署名 / 役職名" value={formData.department} />}
                   <ConfirmRow label="お名前" value={formData.name} />

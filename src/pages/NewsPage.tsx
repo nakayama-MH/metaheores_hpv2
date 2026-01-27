@@ -18,7 +18,11 @@ export const NewsPage: React.FC = () => {
     const fetchCategories = async () => {
       try {
         const response = await client.get({ endpoint: 'categories' });
-        setCategories(response.contents);
+        // 「事例」または「実績」を含まないカテゴリのみを抽出
+        const filtered = response.contents.filter((cat: Category) => 
+          !cat.name.includes('事例') && !cat.name.includes('実績')
+        );
+        setCategories(filtered);
       } catch (e) {
         console.warn('Categories endpoint not found or error, using defaults');
         setCategories([
@@ -37,11 +41,24 @@ export const NewsPage: React.FC = () => {
       setLoading(true);
       try {
         const response = await getBlogs(100, undefined, {
-          categoryId: selectedCategory,
           year: selectedYear,
           keyword: searchQuery
         });
-        setBlogs(response.contents);
+        
+        let filtered = response.contents || [];
+
+        // カテゴリフィルタリング
+        if (selectedCategory) {
+          filtered = filtered.filter(b => b.category?.id === selectedCategory);
+        } else {
+          // 「すべて」の場合：「実績」「事例」を含むカテゴリを除外
+          filtered = filtered.filter(b => {
+            const catName = b.category?.name || '';
+            return !catName.includes('事例') && !catName.includes('実績');
+          });
+        }
+
+        setBlogs(filtered);
       } catch (error) {
         console.error('Failed to fetch blogs', error);
       } finally {
@@ -53,7 +70,7 @@ export const NewsPage: React.FC = () => {
       fetchBlogs();
     }, 500);
     return () => clearTimeout(timer);
-  }, [selectedCategory, selectedYear, searchQuery]);
+  }, [selectedCategory, selectedYear, searchQuery, categories.length]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -120,7 +137,8 @@ export const NewsPage: React.FC = () => {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
                     </div>
                 </div>
-        {/* News List (Table Style) */}
+
+        {/* News Grid */}
         <div className="max-w-7xl mx-auto px-4">
           {loading ? (
              <div className="flex justify-center items-center py-32">
@@ -135,29 +153,42 @@ export const NewsPage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="divide-y divide-gray-100 border-t border-gray-100"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16"
             >
               {blogs.map((item) => (
-                <Link key={item.id} to={`/blog/${item.id}`} className="group flex flex-col md:flex-row md:items-center gap-6 md:gap-12 py-10 hover:bg-gray-50/50 transition-all px-6 -mx-6">
-                  <div className="flex items-center gap-10 flex-shrink-0 min-w-[300px]">
-                    <time className="text-sm md:text-base font-black text-gray-900 font-mono tracking-wider">
-                      {formatDate(item.publishedAt)}
-                    </time>
+                <Link key={item.id} to={`/blog/${item.id}`} className="group flex flex-col h-full">
+                  {/* Eyecatch */}
+                  <div className="relative aspect-video overflow-hidden rounded-xl bg-gray-100 mb-6 shadow-sm border border-gray-50">
+                    <img 
+                      src={item.eyecatch?.url || '/assets/top/business_bg.png'} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
                     {item.category && (
-                      <span className="px-5 py-2 bg-gray-900 text-[10px] font-black text-white uppercase tracking-[0.2em] text-center min-w-[120px]">
-                        {item.category.name}
-                      </span>
+                      <div className="absolute top-4 left-4">
+                        <span className="px-4 py-1.5 bg-gray-900/90 backdrop-blur-sm text-[9px] font-black text-white uppercase tracking-[0.2em] rounded-sm">
+                          {item.category.name}
+                        </span>
+                      </div>
                     )}
                   </div>
-                  <h3 className="text-base md:text-xl font-black text-gray-700 group-hover:text-blue-600 transition-colors line-clamp-2 flex-grow tracking-tight">
-                    {item.title}
-                  </h3>
-                  <div className="hidden md:block">
-                    <div className="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center group-hover:bg-blue-600 group-hover:border-blue-600 transition-all">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                      </svg>
+
+                  {/* Content */}
+                  <div className="flex flex-col flex-grow">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-6 h-6 rounded-full border border-blue-200 flex items-center justify-center flex-shrink-0 transition-colors group-hover:bg-blue-600 group-hover:border-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-3 h-3 text-blue-500 group-hover:text-white">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                      </div>
+                      <time className="text-[10px] font-black text-gray-400 tracking-[0.2em] font-mono">
+                        {formatDate(item.publishedAt)}
+                      </time>
                     </div>
+                    
+                    <h3 className="text-base font-black text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2 tracking-tight leading-snug">
+                      {item.title}
+                    </h3>
                   </div>
                 </Link>
               ))}

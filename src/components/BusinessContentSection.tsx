@@ -8,7 +8,7 @@ const BUSINESS_ITEMS = [
     titleJa: 'メタバース',
     titleEn: 'Metaverse',
     image: '/assets/business-content/metaverce/metaverse_hero.png',
-    logo: '/assets/top/MetaHeroesCreative_logo_B.png',
+    logo: '/assets/top/meta_heroes_creative_logo.png',
     link: '/business',
     align: 'left'
   },
@@ -26,16 +26,16 @@ const BUSINESS_ITEMS = [
     titleJa: 'イベント',
     titleEn: 'Event',
     image: '/assets/business-content/event/event_hero.png',
-    logo: '/assets/top/GHS_logo_black_A.png',
+    logo: '/assets/top/ghs_logo.png',
     link: '/business',
     align: 'left'
   },
   {
     id: 'vacant',
-    titleJa: '施設運営',
+    titleJa: '施設運営事業',
     titleEn: 'Facility management',
     image: '/assets/business-content/vacant-facility/vacant_hero.png',
-    logo: '/assets/top/Hero Egg_yoko.png',
+    logo: '/assets/top/hero_egg_yoko.png',
     link: '/business',
     align: 'right'
   }

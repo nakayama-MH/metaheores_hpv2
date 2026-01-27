@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Blog, getBlogById, getBlogs } from '../lib/microcms';
 
-const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1974&auto=format&fit=crop';
+const PLACEHOLDER_IMAGE = '/assets/top/business_bg.png';
 
 export const BlogDetailPage = () => {
   const { blogId } = useParams<{ blogId: string }>();

@@ -17,7 +17,7 @@ const BUSINESS_TABS = [
   { id: 'metaverse' as BusinessType, label: 'メタバース事業', image: '/assets/business-content/metaverce/metaverse_hero.png' },
   { id: 'ai' as BusinessType, label: 'AI事業', image: '/assets/business-content/ai/ai_hero.png' },
   { id: 'event' as BusinessType, label: 'イベント事業', image: '/assets/business-content/event/event_hero.png' },
-  { id: 'vacant-facility' as BusinessType, label: '空き施設活用事業', image: '/assets/business-content/vacant-facility/vacant_hero.png' },
+  { id: 'vacant-facility' as BusinessType, label: '施設運営事業', image: '/assets/business-content/vacant-facility/vacant_hero.png' },
 ];
 
 const CONTENT_DATA = {
@@ -34,7 +34,7 @@ const CONTENT_DATA = {
     ],
     solutions: [
       { title: 'ゲーム性のある学習', text: 'ユーザーが積極的に参加するために、ゲームの要素を取り入れた体験を中心としたデザインを提供します。', image: '/assets/business-content/metaverce/game_learning.png' },
-      { title: '没入体験', text: '物理的な制約を超えて、安全に実践的なシミュレーションを何度でも体験できます。', image: '/assets/business-content/metaverce/没入体験.png' },
+      { title: '没入体験', text: '物理的な制約を超えて、安全に実践的なシミュレーションを何度でも体験できます。', image: '/assets/business-content/metaverce/immersion.png' },
       { title: 'ワンストップ体制', text: '企画から運用まで、一気通貫で対応するため、開発コストの削減や一貫したブランド体験を提供します。', image: '/assets/business-content/metaverce/onestop.png' },
     ]
   },
@@ -45,14 +45,14 @@ const CONTENT_DATA = {
     concept: 'AI技術でビジネスと教育を加速させる',
     description: '最新のAI技術を実社会に実装。ビジネスプロセスの効率化から、次世代のAI人材育成まで、未来を見据えたソリューションを提供します。',
     issues: [
-      { label: 'AI人材不足', icon: '/assets/business-content/ai/AI人材不足_icon.png', points: ['専門知識の欠如', '教育体制の未整備'] },
-      { label: '時間とコスト', icon: '/assets/business-content/ai/時間とコスト_icon.png', points: ['導入プロセスの長期化', '高い初期投資'] },
-      { label: '企業のDX推進力', icon: '/assets/business-content/ai/企業のDX推進力_icon.png', points: ['既存システムとの乖離', '変革への抵抗感'] },
+      { label: 'AI人材不足', icon: '/assets/business-content/ai/ai_shortage_icon.png', points: ['専門知識の欠如', '教育体制の未整備'] },
+      { label: '時間とコスト', icon: '/assets/business-content/ai/time_cost_icon.png', points: ['導入プロセスの長期化', '高い初期投資'] },
+      { label: '企業のDX推進力', icon: '/assets/business-content/ai/dx_power_icon.png', points: ['既存システムとの乖離', '変革への抵抗感'] },
     ],
     solutions: [
-      { title: 'AI人材育成', text: '実務に直結するカリキュラムを通じて、即戦力となるAI人材を短期間で育成します。', image: '/assets/business-content/ai/AI人材育成.png' },
-      { title: 'AI技術導入', text: '業務フローを分析し、最適なAIツールやカスタムモデルの導入をサポートします。', image: '/assets/business-content/ai/AI技術導入.png' },
-      { title: '継続的なコミュニティ', text: '導入後も最新技術のキャッチアップができるよう、専門家によるサポートコミュニティを提供します。', image: '/assets/business-content/ai/継続的なコミュニティ.png' },
+      { title: 'AI人材育成', text: '実務に直結するカリキュラムを通じて、即戦力となるAI人材を短期間で育成します。', image: '/assets/business-content/ai/ai_training.png' },
+      { title: 'AI技術導入', text: '業務フローを分析し、最適なAIツールやカスタムモデルの導入をサポートします。', image: '/assets/business-content/ai/ai_implementation.png' },
+      { title: '継続的なコミュニティ', text: '導入後も最新技術のキャッチアップができるよう、専門家によるサポートコミュニティを提供します。', image: '/assets/business-content/ai/continuous_community.png' },
     ]
   },
   event: {
@@ -62,31 +62,31 @@ const CONTENT_DATA = {
     concept: 'リアルな体験が未来を変える',
     description: 'デジタル技術とリアルな場を融合させた、体験型イベントをプロデュース。五感を刺激する演出で、確かな感動と深い理解を生み出します。',
     issues: [
-      { label: '一過性の施策', icon: '/assets/business-content/event/一過性の施策_icon.png', points: ['リピーターの欠如', '効果測定の難しさ'] },
-      { label: '地方の過疎化', icon: '/assets/business-content/event/地方の過疎化_icon.png', points: ['若年層の流出', '集客力の低下'] },
-      { label: '教育格差', icon: '/assets/business-content/event/教育格差_icon.png', points: ['体験機会の不足', '情報の地域差'] },
+      { label: '一過性の施策', icon: '/assets/business-content/event/temporary_measure_icon.png', points: ['リピーターの欠如', '効果測定の難しさ'] },
+      { label: '地方の過疎化', icon: '/assets/business-content/event/depopulation_icon.png', points: ['若年層の流出', '集客力の低下'] },
+      { label: '教育格差', icon: '/assets/business-content/event/education_gap_icon.png', points: ['体験機会の不足', '情報の地域差'] },
     ],
     solutions: [
-      { title: 'DX技術の体験会', text: '最新のメタバースやAIを実際に体験できる場を提供し、テクノロジーを身近に感じさせます。', image: '/assets/business-content/event/DX技術の体験会.png' },
-      { title: 'オープンイノベーション', text: '異なる業界や世代が交わる場を創出し、新しいアイデアやコラボレーションを誘発します。', image: '/assets/business-content/event/オープンイノベーション.png' },
-      { title: 'イベント出展', text: '国内外の主要な展示会やフェスティバルへの出展を通じて、ブランドの認知度を最大化します。', image: '/assets/business-content/event/イベント出展.png' },
+      { title: 'DX技術の体験会', text: '最新のメタバースやAIを実際に体験できる場を提供し、テクノロジーを身近に感じさせます。', image: '/assets/business-content/event/dx_experience.png' },
+      { title: 'オープンイノベーション', text: '異なる業界や世代が交わる場を創出し、新しいアイデアやコラボレーションを誘発します。', image: '/assets/business-content/event/open_innovation.png' },
+      { title: 'イベント出展', text: '国内外の主要な展示会やフェスティバルへの出展を通じて、ブランドの認知度を最大化します。', image: '/assets/business-content/event/event_exhibition.png' },
     ]
   },
   'vacant-facility': {
-    titleJa: '空き施設活用事業',
+    titleJa: '施設運営事業',
     titleEn: 'FACILITY REUTILIZATION',
     heroImage: '/assets/business-content/vacant-facility/vacant_hero.png',
     concept: '眠れる資産を地域の希望へ',
-    description: '全国に広がる空き家や遊休施設を、最先端のDX教育拠点やコミュニティスペースとして再生。地域に新しい人の流れと雇用を創出します。',
+    description: '全国に広がる遊休施設を、最先端のDX教育拠点やコミュニティスペースとして再生。地域に新しい人の流れと雇用を創出します。',
     issues: [
-      { label: '遊休資産の活用', icon: '/assets/business-content/vacant-facility/遊休資産の活用_icon.png', points: ['維持コストの負担', '地域の治安悪化'] },
-      { label: 'DX教育環境の不足', icon: '/assets/business-content/vacant-facility/DX教育環境の不足_icon.png', points: ['学習拠点の不在', '指導者の不足'] },
-      { label: '漠然とした学び', icon: '/assets/business-content/vacant-facility/漠然とした学ひび_icon.png', points: ['目的の不明確さ', '実社会との接点のなさ'] },
+      { label: '遊休資産の活用', icon: '/assets/business-content/vacant-facility/idle_assets_icon.png', points: ['維持コストの負担', '地域の治安悪化'] },
+      { label: 'DX教育環境の不足', icon: '/assets/business-content/vacant-facility/dx_env_shortage_icon.png', points: ['学習拠点の不在', '指導者の不足'] },
+      { label: '漠然とした学び', icon: '/assets/business-content/vacant-facility/vague_learning_icon.png', points: ['目的の不明確さ', '実社会との接点のなさ'] },
     ],
     solutions: [
-      { title: '産官学と連携したDX教育', text: '自治体や大学と連携し、地域に根ざした持続可能な教育プログラムを構築します。', image: '/assets/business-content/vacant-facility/産官学と連携したDX教育.png' },
-      { title: '遊休施策の収益化', baseText: '使われていない施設を収益を生む拠点へと転換。経済的な自立をサポートします。', image: '/assets/business-content/vacant-facility/遊休施策の収益化.png' },
-      { title: 'CSR型エコシステム', text: '企業、地域、個人が三方良しとなる持続可能なコミュニティモデルを形成します。', image: '/assets/business-content/vacant-facility/CSR型エコシステム.png' },
+      { title: '産官学と連携したDX教育', text: '自治体や大学と連携し、地域に根ざした持続可能な教育プログラムを構築します。', image: '/assets/business-content/vacant-facility/dx_education_collab.png' },
+      { title: '遊休施策の収益化', baseText: '使われていない施設を収益を生む拠点へと転換。経済的な自立をサポートします。', image: '/assets/business-content/vacant-facility/monetization.png' },
+      { title: 'CSR型エコシステム', text: '企業、地域、個人が三方良しとなる持続可能なコミュニティモデルを形成します。', image: '/assets/business-content/vacant-facility/csr_ecosystem.png' },
     ]
   }
 };
@@ -339,7 +339,7 @@ export const BusinessContentPage: React.FC = () => {
           </div>
           <div className="space-y-12">
             <p className="text-gray-600 leading-[1.8] font-medium text-base tracking-wider">
-              私たちMeta Heroesは、教育・防災・地方創生をテーマにした社会課題を、テクノロジー開発とリアルの場でのイベントや空き施設活用を通じて解決へと導きます。
+              私たちMeta Heroesは、教育・防災・地方創生をテーマにした社会課題を、テクノロジー開発とリアルの場でのイベントや施設運営を通じて解決へと導きます。
             </p>
             <div className="py-8 flex justify-center">
               <img src="/assets/business-content/focus_areas.png" alt="Focus Areas" className="w-full max-w-3xl h-auto" />

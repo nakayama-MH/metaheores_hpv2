@@ -5,26 +5,26 @@ import { Link } from 'react-router-dom';
 const CATEGORIES = [
   { 
     label: '企業情報', 
-    iconPath: '/assets/top/企業情報_icon.png', 
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800',
+    iconPath: '/assets/top/company_icon.png', 
+    image: '/assets/recruit/about_meta_heroes.png',
     path: '/about'
   },
   { 
     label: 'サービス', 
-    iconPath: '/assets/top/サービス_icon.png', 
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800',
+    iconPath: '/assets/top/service_icon.png', 
+    image: '/assets/recruit/services.png',
     path: '#' // Update if service page exists
   },
   { 
     label: '採用', 
-    iconPath: '/assets/top/採用情報_icon.png', 
-    image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=800',
+    iconPath: '/assets/top/recruit_icon.png', 
+    image: '/assets/recruit/recruit_top.jpg',
     path: '#' // Update if recruitment page exists
   },
   { 
     label: 'ブログ', 
-    iconPath: '/assets/top/ブログ_icon.png', 
-    image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=800',
+    iconPath: '/assets/top/blog_icon.png', 
+    image: '/assets/top/business_bg.png',
     path: '/news'
   },
 ];

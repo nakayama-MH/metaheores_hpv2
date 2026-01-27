@@ -8,32 +8,32 @@ import { MovieSection } from '../components/MovieSection';
 const STATIC_BANNERS = [
   {
     id: '1',
-    eyecatch: { url: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop' },
+    eyecatch: { url: '/assets/top/business_bg.png' },
     title: 'eスポーツ ゲームクリエイター アカデミー 2025冬'
   },
   {
     id: '2',
-    eyecatch: { url: 'https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop' },
+    eyecatch: { url: '/assets/top/business_bg.png' },
     title: 'Meta Heroes Guild 10,000名突破'
   },
   {
     id: '3',
-    eyecatch: { url: 'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?q=80&w=2070&auto=format&fit=crop' },
+    eyecatch: { url: '/assets/top/business_bg.png' },
     title: 'XRソリューション 展示会出展'
   },
   {
     id: '4',
-    eyecatch: { url: 'https://images.unsplash.com/photo-1454165833762-b3765e972f4d?q=80&w=2070&auto=format&fit=crop' },
+    eyecatch: { url: '/assets/top/business_bg.png' },
     title: '謹賀新年 2026'
   },
   {
     id: '5',
-    eyecatch: { url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop' },
+    eyecatch: { url: '/assets/top/business_bg.png' },
     title: 'EGG JAM 開催決定'
   }
 ];
 
-const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1974&auto=format&fit=crop';
+const PLACEHOLDER_IMAGE = '/assets/top/business_bg.png';
 
 export const TopPage: React.FC = () => {
   const [banners, setBanners] = useState<any[]>(STATIC_BANNERS);
@@ -361,10 +361,10 @@ export const TopPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-6xl mx-auto">
             {[
-              { label: '企業情報', iconPath: '/assets/top/company_icon.png', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800' },
-              { label: 'サービス', iconPath: '/assets/top/service_icon.png', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800' },
-              { label: '採用', iconPath: '/assets/top/recruit_icon.png', image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=800' },
-              { label: 'ブログ', iconPath: '/assets/top/blog_icon.png', image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=800' },
+              { label: '企業情報', iconPath: '/assets/top/company_icon.png', image: '/assets/recruit/about_meta_heroes.png' },
+              { label: 'サービス', iconPath: '/assets/top/service_icon.png', image: '/assets/recruit/services.png' },
+              { label: '採用', iconPath: '/assets/top/recruit_icon.png', image: '/assets/recruit/recruit_top.jpg' },
+              { label: 'ブログ', iconPath: '/assets/top/blog_icon.png', image: '/assets/top/business_bg.png' },
             ].map((cat, idx) => (
               <a key={idx} href="#" className="relative group aspect-square md:aspect-[3/4] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-xl">
                 <img src={cat.image} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="" />

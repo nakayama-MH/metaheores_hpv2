@@ -51,7 +51,7 @@ export const CompanyProfilePage: React.FC = () => {
           <li>メタバース事業</li>
           <li>AI事業</li>
           <li>イベント事業</li>
-          <li>空きスペース活用事業</li>
+          <li>施設運営事業</li>
         </ul>
       )
     },

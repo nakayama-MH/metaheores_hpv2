@@ -55,11 +55,11 @@ export const SkillsSection = ({ skills, caseStudy }: SkillsSectionProps) => {
           <div className="bg-gray-50 rounded-3xl p-8 shadow-lg">
             <div className="flex flex-col lg:flex-row gap-10">
               {/* 左側: 画像 */}
-              <div className="lg:w-1/2">
+              <div className="lg:w-1/2 overflow-hidden rounded-2xl bg-gray-200">
                 <img
-                  src={caseStudy.image}
+                  src={caseStudy.image || '/assets/top/business_bg.png'}
                   alt="ケーススタディ"
-                  className="w-full h-auto rounded-2xl object-cover"
+                  className="w-full h-full min-h-[300px] object-cover"
                 />
               </div>
 

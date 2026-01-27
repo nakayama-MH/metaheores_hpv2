@@ -6,12 +6,12 @@ export const keitoData: MemberData = {
   name: '大上 慶人',
   nameEn: 'Keito Ogami',
   role: 'ブランディングマネージャー',
-  icon: '/assets/keito/top_color_大上.png',
+  icon: '/assets/keito/top_color.png',
   catchphrase: {
     main: 'クリエイティブで\n満足を超える',
     emphasis: '感動体験を',
   },
-  heroImage: '/assets/keito/ファーストビュー_大上慶人_web.png',
+  heroImage: '/assets/keito/first_view.png',
   stats: [
     { value: '8', suffix: '年', label: '3DCG/2Dデザイン歴' },
     { value: '30', suffix: '+', label: '担当プロジェクト数' },
@@ -19,7 +19,7 @@ export const keitoData: MemberData = {
     { value: '2', suffix: '回', label: '3DCGアワード受賞' },
   ],
   philosophy: {
-    backgroundImage: '/assets/keito/philosophy_大上慶人.png',
+    backgroundImage: '/assets/keito/philosophy.png',
     paragraphs: [
       'クリエイティブで嫌な感情をポジティブに変え、\n困難を達成感に変える。',
       '目に見えない課題を見つけ出し、\n新しいアイデアで感動を生み出すことがモットーです。',
@@ -41,7 +41,7 @@ export const keitoData: MemberData = {
     },
   ],
   caseStudy: {
-    image: '/assets/keito/ケーススタディ_大上慶人.png',
+    image: '/assets/keito/casestudy.png',
     challenge: '資料のデザインや語調が不統一で、ブランドの信頼性と訴求力が低下。',
     approach: 'ブランド規定に基づくテンプレート刷新と、意図が伝わりやすい構成へ。',
     result: '受注率1.2倍、工数3割減。',
@@ -68,7 +68,7 @@ export const keitoData: MemberData = {
       label: 'Origin',
       title: '3DCGジェネラリスト',
       description: [
-        '3DCGプロダクションでゲーム・遊技機などの3DCG映像制作。',
+        '3DCGプロダクションでゲーム・遊技機などの3DCG映像制作. ',
         '3DCGコンテンツ制作のチーム運営と制作基礎を学び、AAAタイトルプロジェクトを経験。',
       ],
     },
@@ -76,23 +76,23 @@ export const keitoData: MemberData = {
   qa: [
     {
       question: 'Meta Heroesに入社を決めた理由は？',
-      answer: 'これまでの3DCGデザイナー時代では、仕様書通りに制作する日々に「もっと本質から関わりたい」ともどかしさを感じていました。そこで、事業を自ら動かせる当社へ入社。企画から納品までを一気通貫で担う中で、ビジネス視点や周囲を巻き込む力が養われました。クリエイティブの知見を活かしつつ、裁量を持ってゼロから事業を創り上げる今の環境は、毎日が刺激的で、まさに私が求めていた挑戦の場になっています。',
-      image: '/assets/keito/Q1_大上慶人.png',
+      answer: 'これまでの3DCGデザイナー時代では、仕様書通りに制作する日々に「もっと本質から関わりたい」ともどかしさを感じていました。そこで、事業を自ら動かせる当社へ入社. 企画から納品までを一気通貫で担う中で、ビジネス視点や周囲を巻き込む力が養われました. クリエイティブの知見を活かしつつ、裁量を持ってゼロから事業を創り上げる今の環境は、毎日が刺激的で、まさに私が求めていた挑戦の場になっています。',
+      image: '/assets/keito/q1.png',
     },
     {
       question: '入社して良かったことは？',
-      answer: '入社して何より嬉しいのは、イベントや商談などの場を通じて、お客様から直接いただく「すごい」「面白い」という反応を聞けることです。自分が手掛けた成果物をその場で体験していただき、楽しんでいる姿や生の感想に触れることができます。「本当に作ってよかった」と心から実感できる瞬間に、一番のやりがいを感じることができ、さらに価値あるものを届けたいという、次の挑戦へ向かう大きな原動力となっています。',
-      image: '/assets/keito/Q2_大上慶人.png',
+      answer: '入社して何より嬉しいのは、イベントや商談などの場を通じて、お客様から直接いただく「すごい」「面白い」という反応を聞けることです. 自分が手掛けた成果物をその場で体験していただき、楽しんでいる姿や生の感想に触れることができます. 「本当に作ってよかった」と心から実感できる瞬間に、一番のやりがいを感じることができ、さらに価値あるものを届けたいという、次の挑戦へ向かう大きな原動力となっています。',
+      image: '/assets/keito/q2.png',
     },
     {
       question: '一番自分自身が成長を感じたことは？',
-      answer: '一番の成長は、仕事の全体像を捉え、次の一手を「先読み」して動く力がついたことです。以前は目の前の作業に必死でしたが、今は「この後に何が必要になるか」「相手はどう動くか」を常に想像できるようになりました。ゴールから逆算して先回りして準備することで、手戻りを防ぎ、スムーズな進行をリードできています。指示を待つのではなく、自ら状況をコントロールする「主体性」が、確かな自信になっています。',
-      image: '/assets/keito/Q3_大上慶人.png',
+      answer: '一番の成長は、仕事の全体像を捉え、次の一手を「先読み」して動く力がついたことです. 以前は目の前の作業に必死でしたが、今は「この後に何が必要になるか」「相手はどう動くか」を常に想像できるようになりました. ゴールから逆算して先回りして準備することで、手戻りを防ぎ、スムーズな進行をリードできています. 指示を待つのではなく、自ら状況をコントロールする「主体性」が、確かな自信になっています。',
+      image: '/assets/keito/q3.png',
     },
     {
       question: 'プライベートの過ごし方は？',
-      answer: '・ジムでトレーニング\nデスクワークなので、運動不足解消のために、時間があるときはジムにいっています。1ヶ月で5kgのダイエットにも成功しました！\n\n・ダンス→居酒屋巡り\n大学時代の友人と週末集まって、ダンスをしています。その後、一緒に居酒屋巡りをし、リフレッシュしています。たまに、二日酔いになっちゃいますが...（笑）',
-      image: '/assets/keito/Q4_大上慶人.png',
+      answer: '・ジムでトレーニング\nデスクワークなので、運動不足解消のために、時間があるときはジムにいっています. 1ヶ月で5kgのダイエットにも成功しました！\n\n・ダンス→居酒屋巡り\n大学時代の友人と週末集まって、ダンスをしています. その後、一緒に居酒屋巡りをし、リフレッシュしています. たまに、二日酔いになっちゃいますが...（笑）',
+      image: '/assets/keito/q4.png',
     },
   ],
   schedule: [
@@ -146,7 +146,7 @@ export const namiData: MemberData = {
   name: '小林 奈美',
   nameEn: 'Nami Kobayashi',
   role: 'コミュニティマーケター',
-  icon: '/assets/nami/top_color_小林.png',
+  icon: '/assets/nami/top_color.png',
   catchphrase: {
     main: (
       <>
@@ -157,7 +157,7 @@ export const namiData: MemberData = {
     ),
     emphasis: '進化の物語を',
   },
-  heroImage: '/assets/nami/first_小林.png',
+  heroImage: '/assets/nami/first.png',
   stats: [
     { value: '80', suffix: '回', label: 'AIセミナー登壇/年' },
     { value: '15000', suffix: '人', label: 'AI研修受講者数' },
@@ -165,7 +165,7 @@ export const namiData: MemberData = {
     { value: '継続', suffix: '中', label: 'AI MONDAY' },
   ],
   philosophy: {
-    backgroundImage: '/assets/nami/philosophy_小林奈美.png',
+    backgroundImage: '/assets/nami/philosophy.png',
     paragraphs: [
       '「誰もが誰かのHEROであるために」。',
       '私はすべての人の可能性を信じ、AIという叡智を届けることで、その輝きを最大化させる使命を担っています。',
@@ -188,7 +188,7 @@ export const namiData: MemberData = {
     },
   ],
   caseStudy: {
-    image: '/assets/nami/ケーススタディ_小林奈美.png',
+    image: '/assets/nami/casestudy.png',
     challenge: 'AI導入の障壁となる「難しさ」や「社内の理解不足」。',
     approach: '徹底した伴走支援と、実践的な研修プログラムの提供。',
     result: '受講者の意識変革と、実務へのAI導入加速。',
@@ -226,22 +226,22 @@ export const namiData: MemberData = {
     {
       question: 'Meta Heroesに入社を決めた理由は？',
       answer: '圧倒的な「学び・スピード・品格」が共存する環境です。経営陣の卓越した視座と、20〜30代の若手ながら経営スキルを兼ね備えた社員たち。帝国データバンクで上位0.2%に食い込む実績を支えるのは、一人三役を同時にこなす驚異的なスピード感です。何より「ヒーローを作る」組織として、ネガティブを排除し、メラビアンの法則を意識した最高のホスピタリティを追求する。この高潔な文化の中で切磋琢磨できることが最大の喜びです。',
-      image: '/assets/nami/Q1_小林奈美.png',
+      image: '/assets/nami/q1.png',
     },
     {
       question: '自身の成長を感じる点は？',
       answer: '経営者から一転、人生で初めて「社員」として20〜30代の精鋭と切磋琢磨し、人間関係や組織論を深く学んでいます。IT業界への挑戦に加え、売上目標からのKPI設計や自ら動く営業もすべてが初めての経験。この劇的な環境変化の中、営業部を統括する役割もいただき、プレッシャーを楽しみながら自己進化を続けています。',
-      image: '/assets/nami/Q2_小林奈美.png',
+      image: '/assets/nami/q2.png',
     },
     {
       question: '大切にしていることは？',
       answer: '「一社も、一人も取り残さない」。AIという強力な武器を、特定の人だけでなく、すべての企業、すべての人に届けることです。技術の進歩は時に格差を生みますが、私たちは教育とコミュニティを通じて、誰もがその恩恵を受けられる世界を目指しています。そのために、まずは自分自身が変化を恐れず、常に学び続ける姿勢を貫いています。',
-      image: '/assets/nami/Q3_小林奈美.png',
+      image: '/assets/nami/q3.png',
     },
     {
       question: 'プライベートの過ごし方は？',
       answer: '仕事もプライベートも境目なく楽しむタイプですが、やはり音楽は人生の一部です。ピアノを弾く時間は自分と向き合う大切なひととき。また、美味しい食事とお酒を囲んで仲間と語り合う時間も大好きです。新しいインスピレーションは、意外とリラックスした瞬間に生まれるものだと感じています。',
-      image: '/assets/nami/Q4_小林奈美.png',
+      image: '/assets/nami/q4.png',
     },
   ],
   schedule: [
@@ -290,12 +290,12 @@ export const yuyaData: MemberData = {
   name: '北野 裕也',
   nameEn: 'Yuya Kitano',
   role: 'わくわくスマイルプランナー',
-  icon: '/assets/yuya/top_color_北野.png',
+  icon: '/assets/yuya/top_color.png',
   catchphrase: {
     main: '「心が動く瞬間」を創る',
     emphasis: 'きっかけを次々と',
   },
-  heroImage: '/assets/yuya/first_北野.png',
+  heroImage: '/assets/yuya/first.png',
   stats: [
     { value: '常識', suffix: 'を', label: '変える教育設計' },
     { value: '最適', suffix: 'な', label: 'テクノロジー提案' },
@@ -303,7 +303,7 @@ export const yuyaData: MemberData = {
     { value: '100', suffix: '%', label: 'スマイル追求' },
   ],
   philosophy: {
-    backgroundImage: '/assets/yuya/philosophy_北野裕也.png',
+    backgroundImage: '/assets/yuya/philosophy.png',
     paragraphs: [
       '「心が動く瞬間」を創ることを信念としています。',
       '子どもたちが未知に触れて表情を輝かせる瞬間を増やしたい。その様子を見て心動かされる周りの大人を増やし、この社会をより良くしていきたい。',
@@ -325,7 +325,7 @@ export const yuyaData: MemberData = {
     },
   ],
   caseStudy: {
-    image: '/assets/yuya/ケーススタディ_北野裕也.png',
+    image: '/assets/yuya/casestudy.png',
     challenge: '教育現場におけるテクノロジー活用の遅れと、子どもたちの興味関心の減退。',
     approach: '「わくわく」を軸にした新しい教育プログラムの開発と、テクノロジーによる体験の拡張。',
     result: '子どもたちの自発的な学びの増加と、教育における新しい価値観の創出。',
@@ -360,22 +360,22 @@ export const yuyaData: MemberData = {
     {
       question: 'Meta Heroesに入社を決めた理由は？',
       answer: '「教育の常識を変えたい」という強い思いが、入社の決め手となりました。既存の枠組みにとらわれず、テクノロジーの力を使って新しい「きっかけ」を次々と生み出せる環境に魅力を感じました。',
-      image: '/assets/yuya/Q1_北野裕也.png',
+      image: '/assets/yuya/q1.png',
     },
     {
       question: '入社して良かったことは？',
       answer: '家族を大切にする社風が魅力です。代表から私生活まで深く気遣う温かさがあり、より一層家族を大事にしたいと思えます。また、万博での登壇や船上での花見BBQなど、普通では味わえない貴重な体験や、多才な方々との出会いが日常的にあります。',
-      image: '/assets/yuya/Q2_北野裕也.png',
+      image: '/assets/yuya/q2.png',
     },
     {
       question: '自身が成長を感じたことは？',
       answer: '以前は人前での発信が苦手でしたが、自分の考えを言語化して伝える重要性を学び、現在は積極的に登壇や提案に挑めるようになりました。また、組織の立ち上げを通じて経営視点も養われています。',
-      image: '/assets/yuya/Q3_北野裕也.png',
+      image: '/assets/yuya/q3.png',
     },
     {
       question: '大切にしていることは？',
       answer: '「家族への感謝」と「心が動く瞬間」です。刺激的な環境で仕事に打ち込めるのは家族の支えがあってこそ。その感謝を忘れず、子どもたちの未知への挑戦を支えるきっかけを創り続けていきたいです。',
-      image: '/assets/yuya/Q4_北野裕也.png',
+      image: '/assets/yuya/q4.png',
     },
   ],
   schedule: [
@@ -395,12 +395,12 @@ export const manamiData: MemberData = {
   name: '横田 愛美',
   nameEn: 'Manami Yokota',
   role: 'HERO EGGマネージャー',
-  icon: '/assets/manami/top_color_横田愛美.png',
+  icon: '/assets/manami/top_color.png',
   catchphrase: {
     main: '日本と世界を繋ぐ\nライトワーカー',
     emphasis: '第三の居場所を',
   },
-  heroImage: '/assets/manami/first_横田愛美.png',
+  heroImage: '/assets/manami/first.png',
   stats: [
     { value: '2.5', suffix: '年', label: 'NY留学経験' },
     { value: '6.0', label: 'IELTSスコア' },
@@ -408,7 +408,7 @@ export const manamiData: MemberData = {
     { value: '124', suffix: 'カ国', label: '国際交流参加国数' },
   ],
   philosophy: {
-    backgroundImage: '/assets/manami/philosophy_横田愛美.png',
+    backgroundImage: '/assets/manami/philosophy.png',
     paragraphs: [
       '生きづらさを感じる世の中で、家でも学校でもない「第三の居場所」となるような機会・環境を提供することを大事にしています。',
       '世界は思ってるよりも広くて、色々な可能性がありなんでもできるということを示したい。',
@@ -430,7 +430,7 @@ export const manamiData: MemberData = {
     },
   ],
   caseStudy: {
-    image: '/assets/manami/ケーススタディ_横田愛美.png',
+    image: '/assets/manami/casestudy.png',
     challenge: '子どもたちが狭い世界観の中で将来の選択肢を狭めてしまっている現状。',
     approach: 'HERO EGGを通じて、異文化や多様な価値観に触れる原体験を提供。',
     result: '子どもたちの視野が広がり、自ら新しい挑戦を始めるケースが増加。',
@@ -465,22 +465,22 @@ export const manamiData: MemberData = {
     {
       question: '入社して良かったことは？',
       answer: '保護者の方から感謝されたり、「ここにきて良かった」などと言ってくれると嬉しくなります。自分一人じゃ関われない人と当たり前のように関わることができるのも魅力。以前はずっと完璧を求める減点方式で苦しかったですが、ここでは加点方式になってきていると感じられるところです。',
-      image: '/assets/manami/Q1_横田愛美.png',
+      image: '/assets/manami/q1.png',
     },
     {
       question: '自身の成長を感じる点は？',
       answer: 'イベントの時の立ち振る舞いや気遣い、イベント企画運営力の向上だけでなく、自分自身の心の忍耐力が強化された気がします。予期せぬトラブルにも冷静に対応し、チームを導く力がついてきました。',
-      image: '/assets/manami/Q2_横田愛美.png',
+      image: '/assets/manami/q2.png',
     },
     {
       question: 'Meta Heroesの魅力は？',
       answer: '「可能性を信じる」文化です。私の「世界は広い」という想いを、実際の事業として形にできる環境があります。一人ひとりの個性を尊重し、それを強みとして活かしてくれる仲間がいることが最大の魅力です。',
-      image: '/assets/manami/Q3_横田愛美.png',
+      image: '/assets/manami/q3.png',
     },
     {
       question: 'プライベートの過ごし方は？',
       answer: '毎週、神社へ行って、その帰りに観葉植物を購入するのがルーティンです。家では好きなお香を炊いて、音楽を聴きながらゆっくりハーブティーを飲んでいます。自分を整える時間をとても大切にしています。',
-      image: '/assets/manami/Q4_横田愛美.png',
+      image: '/assets/manami/q4.png',
     },
   ],
   schedule: [
@@ -501,12 +501,12 @@ export const kenjiData: MemberData = {
   name: '近藤 憲治',
   nameEn: 'Kenji Kondo',
   role: 'コーポレートエンジニア',
-  icon: '/assets/kenji/top_color_近藤憲治.png',
+  icon: '/assets/kenji/top_color.png',
   catchphrase: {
     main: '組織の鼓動を整える\n“システムコンダクター”',
     emphasis: '挑戦の一歩を',
   },
-  heroImage: '/assets/kenji/first_近藤憲治.png',
+  heroImage: '/assets/kenji/first.png',
   stats: [
     { value: '20', suffix: '年', label: '開発経験年数' },
     { value: '100', suffix: '回', label: '娘の登壇同行回数' },
@@ -514,7 +514,7 @@ export const kenjiData: MemberData = {
     { value: '4', suffix: 'つ', label: '所属コミュニティ数' },
   ],
   philosophy: {
-    backgroundImage: '/assets/kenji/philosophy_近藤憲治.png',
+    backgroundImage: '/assets/kenji/philosophy.png',
     paragraphs: [
       '私が大切にしているのは、世代を超えて学び合える環境をつくり、挑戦の一歩を後押しすることです。',
       '中学生で起業した娘と掲げた「AI時代の教育を創る」という想いを原動力に、この会社でも家庭から社会へ学びの変革を広げ、子どもも大人も自分の可能性を信じて挑戦できる未来を実現したいと考えています。',
@@ -535,7 +535,7 @@ export const kenjiData: MemberData = {
     },
   ],
   caseStudy: {
-    image: '/assets/kenji/first_ケーススタディ.png',
+    image: '/assets/kenji/casestudy.png',
     challenge: '組織の拡大に伴う業務フローの複雑化と、属人化による効率低下。',
     approach: '全体最適を見据えたシステム設計と、自動化ツールの導入による業務プロセスの再構築。',
     result: '業務時間の短縮とミスの削減、本来注力すべきコア業務への集中を実現。',
@@ -570,22 +570,22 @@ export const kenjiData: MemberData = {
     {
       question: 'Meta Heroesに入社を決めた理由は？',
       answer: '挑戦する人を支え、ヒーローを生み出していくというMetaHeroesのビジョンに強く惹かれたことが入社の大きな理由です。中学生で起業した娘と共に歩んできた経験から、誰もが可能性を信じて挑戦できる社会を作りたいという想いと重なりました。',
-      image: '/assets/kenji/Q1_近藤憲治.png',
+      image: '/assets/kenji/q1.png',
     },
     {
       question: '入社して良かったことは？',
       answer: '多様なバックグラウンドを持つメンバーと協働できる点です。それぞれの専門性を活かしながら、互いに刺激し合える環境があり、自分自身の技術力や視座を高める絶好の機会となっています。',
-      image: '/assets/kenji/Q2_近藤憲治.png',
+      image: '/assets/kenji/q2.png',
     },
     {
       question: '大切にしていることは？',
       answer: '「技術は人のためにある」という信念です。どんなに高度な技術も、使う人が幸せにならなければ意味がありません。だからこそ、現場の声に耳を傾け、本当に必要とされる仕組みを作ることにこだわっています。',
-      image: '/assets/kenji/Q3_近藤憲治.png',
+      image: '/assets/kenji/q3.png',
     },
     {
       question: 'プライベートの過ごし方は？',
       answer: '娘との時間を大切にしています。毎晩のミーティングや、登壇への同行など、彼女の挑戦を一番近くで応援できることが喜びです。また、テクノロジー系コミュニティでの活動を通じて、自身のアップデートも欠かしません。（X：@kondo2024）',
-      image: '/assets/kenji/Q4_近藤憲治.png',
+      image: '/assets/kenji/q4.png',
     },
   ],
   schedule: [

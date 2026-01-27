@@ -4,7 +4,7 @@ import { getBlogs, Blog, Category, client } from '../lib/microcms';
 import { Search, ChevronDown } from 'lucide-react';
 import { PageHero } from '../components/PageHero';
 
-const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1974&auto=format&fit=crop';
+const PLACEHOLDER_IMAGE = '/assets/top/business_bg.png';
 
 export const WorksPage: React.FC = () => {
   const [works, setWorks] = useState<Blog[]>([]);
